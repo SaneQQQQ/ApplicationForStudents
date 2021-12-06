@@ -1,7 +1,8 @@
-package com.application.service;
+package com.application.service.impl;
 
-import com.application.dao.GroupDAO;
+import com.application.dao.impl.GroupDAOImpl;
 import com.application.model.Group;
+import com.application.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +13,10 @@ import java.util.List;
 @Service
 public class GroupServiceImpl implements GroupService {
 
-    private final GroupDAO groupDAO;
+    private final GroupDAOImpl groupDAO;
 
     @Autowired
-    public GroupServiceImpl(GroupDAO groupDAO) {
+    public GroupServiceImpl(GroupDAOImpl groupDAO) {
         this.groupDAO = groupDAO;
     }
 

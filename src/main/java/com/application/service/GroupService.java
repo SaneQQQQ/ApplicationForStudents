@@ -5,6 +5,7 @@ import com.application.model.Group;
 import java.util.List;
 
 public interface GroupService {
+
     void create(Group group);
 
     Group read(Long id);

@@ -1,5 +1,6 @@
 package com.application.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,6 +31,7 @@ public class Student {
     @Column(name = "email", nullable = false, unique = true, length = 128)
     private String email;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

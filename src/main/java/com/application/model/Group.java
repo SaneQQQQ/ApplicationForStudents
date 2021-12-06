@@ -1,6 +1,6 @@
 package com.application.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,7 +23,7 @@ public class Group {
     @Column(name = "title", nullable = false, unique = true, length = 16)
     private String title;
 
-    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -4,8 +4,8 @@ import com.application.model.Group;
 import com.application.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,30 +22,41 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Group> create(@RequestBody @Valid Group group) {
+    @PostMapping
+    public ResponseEntity<Group> create(@RequestBody @Valid Group group, BindingResult result) {
+        if (result.hasErrors())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         groupService.create(group);
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("{id}")
     public ResponseEntity<Group> read(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(groupService.read(id), HttpStatus.OK);
+        if (id == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        Group group = groupService.read(id);
+        if (group == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Group> update(@RequestBody @Valid Group group) {
+    @PutMapping
+    public ResponseEntity<Group> update(@RequestBody @Valid Group group, BindingResult result) {
+        if (result.hasErrors())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         groupService.update(group);
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("{id}")
     public ResponseEntity<Group> delete(@PathVariable("id") Long id) {
+        if (id == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         groupService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public ResponseEntity<List<Group>> getAll() {
         return new ResponseEntity<>(groupService.getAll(), HttpStatus.OK);
     }
