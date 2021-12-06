@@ -56,7 +56,7 @@ public class GroupController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping//????
     public ResponseEntity<List<Group>> getAll() {
         return new ResponseEntity<>(groupService.getAll(), HttpStatus.OK);
     }
