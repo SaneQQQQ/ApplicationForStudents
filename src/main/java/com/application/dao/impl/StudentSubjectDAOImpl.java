@@ -13,5 +13,4 @@ public class StudentSubjectDAOImpl extends BaseOperationsDAOImpl<StudentSubject>
     public StudentSubjectDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory, StudentSubject.class);
     }
-
 }
