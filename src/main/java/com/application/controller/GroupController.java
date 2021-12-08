@@ -26,38 +26,30 @@ public class GroupController {
     public ResponseEntity<Group> create(@RequestBody @Valid Group group, BindingResult result) {
         if (result.hasErrors())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        groupService.create(group);
-        return new ResponseEntity<>(group, HttpStatus.OK);
+        return new ResponseEntity<>(groupService.create(group), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Group> read(@PathVariable("id") Long id) {
-        if (id == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Group group = groupService.read(id);
-        if (group == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(group, HttpStatus.OK);
+        return new ResponseEntity<>(groupService.read(id), HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<Group> update(@RequestBody @Valid Group group, BindingResult result) {
-        if (result.hasErrors())
+        if (!groupService.update(group) || result.hasErrors())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        groupService.update(group);
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Group> delete(@PathVariable("id") Long id) {
-        if (id == null)
+        if (!groupService.delete(id) || id == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        groupService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping//????
-    public ResponseEntity<List<Group>> getAll() {
-        return new ResponseEntity<>(groupService.getAll(), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<List<Group>> readAll() {
+        return new ResponseEntity<>(groupService.readAll(), HttpStatus.OK);
     }
 }

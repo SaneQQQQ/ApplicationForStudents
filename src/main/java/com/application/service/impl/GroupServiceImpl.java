@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -22,31 +23,36 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public void create(Group group) {
-        groupDAO.create(group);
+    public Group create(Group group) {
+        return groupDAO.create(group).orElseThrow(() -> new EntityNotFoundException("Group with id " + group.getId() + " was not created"));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Group read(Long id) {
-        return groupDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Entity with id " + id + " not found"));
+        return groupDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found"));
     }
 
     @Override
     @Transactional
-    public void update(Group group) {
-        groupDAO.update(group);
+    public boolean update(Group group) {
+        try {
+            Group readGroup = read(group.getId());
+        } catch (EntityNotFoundException e) {
+            return false;
+        }
+        return groupDAO.update(group);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        groupDAO.delete(id);
+    public boolean delete(Long id) {
+        return groupDAO.delete(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Group> getAll() {
-        return groupDAO.getAll();
+    public List<Group> readAll() {
+        return groupDAO.readAll();
     }
 }

@@ -13,5 +13,4 @@ public class GroupDAOImpl extends BaseOperationsDAOImpl<Group> implements GroupD
     public GroupDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory, Group.class);
     }
-
 }
