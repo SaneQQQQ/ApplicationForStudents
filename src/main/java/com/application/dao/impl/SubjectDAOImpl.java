@@ -13,5 +13,4 @@ public class SubjectDAOImpl extends BaseOperationsDAOImpl<Subject> implements Su
     public SubjectDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory, Subject.class);;
     }
-
 }

@@ -1,5 +1,6 @@
 package com.application.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public class Subject {
     @Column(name = "title", nullable = false, unique = true, length = 128)
     private String title;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "subject")
     private Set<StudentSubject> studentSubjects;
 }
