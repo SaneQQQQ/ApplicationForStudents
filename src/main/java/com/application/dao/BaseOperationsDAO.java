@@ -1,17 +1,18 @@
 package com.application.dao;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
 public interface BaseOperationsDAO<T> {
 
-    void create(T t);
+    Optional<T> create(T t);
 
-    Optional<T> read(Long id);
+    Optional<T> read(Serializable id);
 
-    void update(T t);
+    boolean update(T t);
 
-    void delete(Long id);
+    boolean delete(Serializable id);
 
-    List<T> getAll();
+    List<T> readAll();
 }

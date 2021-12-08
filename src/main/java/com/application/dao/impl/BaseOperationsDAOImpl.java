@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,24 +22,32 @@ public abstract class BaseOperationsDAOImpl<T> implements BaseOperationsDAO<T> {
         this.tClass = tClass;
     }
 
-    public void create(T t) {
-        sessionFactory.getCurrentSession().save(t);
+    public Optional<T> create(T t) {
+        Serializable id = sessionFactory.getCurrentSession().save(t);
+        return read(id);
     }
 
-    public Optional<T> read(Long id) {
-        return Optional.of(sessionFactory.getCurrentSession().get(tClass, id));
-    }
-
-    public void update(T t) {
-        sessionFactory.getCurrentSession().saveOrUpdate(t);
-    }
-
-    public void delete(Long id) {
+    public Optional<T> read(Serializable id) {
         T t = sessionFactory.getCurrentSession().get(tClass, id);
-        sessionFactory.getCurrentSession().delete(t);
+        if (t == null)
+            return Optional.empty();
+        return Optional.of(t);
     }
 
-    public List<T> getAll() {
+    public boolean update(T t) {
+        sessionFactory.getCurrentSession().merge(t);
+        return true;
+    }
+
+    public boolean delete(Serializable id) {
+        T entity = sessionFactory.getCurrentSession().get(tClass, id);
+        if (entity == null)
+            return false;
+        sessionFactory.getCurrentSession().delete(entity);
+        return true;
+    }
+
+    public List<T> readAll() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(tClass);
