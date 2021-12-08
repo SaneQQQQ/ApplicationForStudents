@@ -13,5 +13,4 @@ public class StudentDAOImpl extends BaseOperationsDAOImpl<Student> implements St
     public StudentDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory, Student.class);
     }
-
 }

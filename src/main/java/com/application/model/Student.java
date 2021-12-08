@@ -1,6 +1,7 @@
 package com.application.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,10 +41,11 @@ public class Student {
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "student")
     private Set<StudentSubject> studentSubjects;
 
     @Transient
-    @Formula(value = "SELECT AVG(mark) FROM students_subjects WHERE student_id = id")
+    @Formula(value = "(select AVG(ss.mark) FROM students_subjects AS ss WHERE ss.student_id = id)")
     private double averageRank;
 }
