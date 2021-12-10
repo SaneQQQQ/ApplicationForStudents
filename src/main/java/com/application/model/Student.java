@@ -45,7 +45,6 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private Set<StudentSubject> studentSubjects;
 
-    @Transient
-    @Formula(value = "(select AVG(ss.mark) FROM students_subjects AS ss WHERE ss.student_id = id)")
+    @Formula(value = "(SELECT AVG(s.mark) FROM students_subjects AS s WHERE s.student_id = id)")
     private double averageRank;
 }
