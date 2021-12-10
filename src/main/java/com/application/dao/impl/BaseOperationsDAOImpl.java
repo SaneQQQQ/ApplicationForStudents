@@ -4,22 +4,25 @@ import com.application.dao.BaseOperationsDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseOperationsDAOImpl<T> implements BaseOperationsDAO<T> {
 
+    @Autowired
+    protected SessionFactory sessionFactory;
     private final Class<T> tClass;
-    protected final SessionFactory sessionFactory;
 
-    public BaseOperationsDAOImpl(SessionFactory sessionFactory, Class<T> tClass) {
-        this.sessionFactory = sessionFactory;
-        this.tClass = tClass;
+    @SuppressWarnings("unchecked")
+    public BaseOperationsDAOImpl() {
+        this.tClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     public Optional<T> create(T t) {
