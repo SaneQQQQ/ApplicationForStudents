@@ -45,6 +45,6 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private Set<StudentSubject> studentSubjects;
 
-    @Formula(value = "(SELECT AVG(s.mark) FROM students_subjects AS s WHERE s.student_id = id)")
+    @Formula("(SELECT AVG(s.mark) FROM students_subjects AS s WHERE s.student_id = id)")
     private double averageRank;
 }
