@@ -1,7 +1,6 @@
 package com.application.service;
 
 import com.application.model.StudentSubject;
-import com.application.model.StudentSubjectId;
 
 import java.util.List;
 
@@ -9,11 +8,13 @@ public interface StudentSubjectService {
 
     StudentSubject create(StudentSubject studentSubject);
 
-    StudentSubject read(StudentSubjectId id);
+    StudentSubject read(Long studentId, Long subjectId);
 
     boolean update(StudentSubject studentSubject);
 
-    boolean delete(StudentSubjectId id);
+    boolean delete(Long studentId, Long subjectId);
 
     List<StudentSubject> readAll();
+
+    List<StudentSubject> readAllByStudentId(Long id);
 }
