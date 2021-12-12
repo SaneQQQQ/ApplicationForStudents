@@ -55,4 +55,10 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> readAll() {
         return studentDAO.readAll();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Student> readAllByGroupId(Long id) {
+        return studentDAO.readAllByGroupId(id);
+    }
 }

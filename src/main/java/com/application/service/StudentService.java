@@ -15,4 +15,6 @@ public interface StudentService {
     boolean delete(Long id);
 
     List<Student> readAll();
+
+    List<Student> readAllByGroupId(Long id);
 }

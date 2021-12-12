@@ -54,6 +54,11 @@ public class StudentController {
         return new ResponseEntity<>(studentService.readAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/group/{group_id}")
+    public ResponseEntity<List<Student>> readAllByGroupId(@PathVariable("group_id") Long groupId) {
+        return new ResponseEntity<>(studentService.readAllByGroupId(groupId), HttpStatus.OK);
+    }
+
     @PostMapping("/marks")
     public ResponseEntity<StudentSubject> createMark(@RequestBody @Valid StudentSubject studentSubject) {
         return new ResponseEntity<>(studentSubjectService.create(studentSubject), HttpStatus.OK);
@@ -76,11 +81,6 @@ public class StudentController {
         if (!studentSubjectService.delete(studentId, subjectId))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/marks")
-    public ResponseEntity<List<StudentSubject>> readAllMarksByStudent() {
-        return new ResponseEntity<>(studentSubjectService.readAll(), HttpStatus.OK);
     }
 
     @GetMapping("{student_id}/marks")
