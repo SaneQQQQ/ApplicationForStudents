@@ -26,5 +26,5 @@ public class StudentSubject {
     @Min(0)
     @Max(100)
     @Column(name = "mark")
-    private int mark;
+    private Integer mark;
 }

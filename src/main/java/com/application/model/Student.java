@@ -46,5 +46,5 @@ public class Student {
     private Set<StudentSubject> studentSubjects;
 
     @Formula("(SELECT AVG(s.mark) FROM students_subjects AS s WHERE s.student_id = id)")
-    private double averageRank;
+    private Double averageRank;
 }
