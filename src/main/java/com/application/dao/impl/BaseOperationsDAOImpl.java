@@ -37,9 +37,9 @@ public abstract class BaseOperationsDAOImpl<T> implements BaseOperationsDAO<T> {
         return Optional.of(t);
     }
 
-    public boolean update(T t) {
-        sessionFactory.getCurrentSession().merge(t);
-        return true;
+    @SuppressWarnings("unchecked")
+    public T update(T t) {
+        return (T) sessionFactory.getCurrentSession().merge(t);
     }
 
     public boolean delete(Serializable id) {

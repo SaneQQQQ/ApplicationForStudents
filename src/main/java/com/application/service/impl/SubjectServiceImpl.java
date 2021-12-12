@@ -1,7 +1,6 @@
 package com.application.service.impl;
 
 import com.application.dao.impl.SubjectDAOImpl;
-import com.application.model.Student;
 import com.application.model.Subject;
 import com.application.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +34,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional
-    public boolean update(Subject subject) {
-        try {
-            Subject readSubject = read(subject.getId());
-        } catch (EntityNotFoundException e) {
-            return false;
-        }
+    public Subject update(Subject subject) {
         return subjectDAO.update(subject);
     }
 

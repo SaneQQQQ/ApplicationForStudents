@@ -1,7 +1,6 @@
 package com.application.service.impl;
 
 import com.application.dao.impl.StudentDAOImpl;
-import com.application.model.Group;
 import com.application.model.Student;
 import com.application.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +34,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public boolean update(Student student) {
-        try {
-            Student readStudent = read(student.getId());
-        } catch (EntityNotFoundException e) {
-            return false;
-        }
+    public Student update(Student student) {
         return studentDAO.update(student);
     }
 

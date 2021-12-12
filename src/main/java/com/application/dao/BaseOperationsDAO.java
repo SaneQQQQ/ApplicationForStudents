@@ -10,7 +10,7 @@ public interface BaseOperationsDAO<T> {
 
     Optional<T> read(Serializable id);
 
-    boolean update(T t);
+    T update(T t);
 
     boolean delete(Serializable id);
 

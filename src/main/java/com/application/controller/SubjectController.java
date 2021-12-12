@@ -5,14 +5,13 @@ import com.application.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/subjects/")
+@RequestMapping("/subjects")
 public class SubjectController {
 
     private final SubjectService subjectService;
@@ -23,27 +22,23 @@ public class SubjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Subject> create(@RequestBody @Valid Subject subject, BindingResult result) {
-        if (result.hasErrors())
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Subject> create(@RequestBody @Valid Subject subject) {
         return new ResponseEntity<>(subjectService.create(subject), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Subject> read(@PathVariable("id") Long id) {
         return new ResponseEntity<>(subjectService.read(id), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<Subject> update(@RequestBody @Valid Subject subject, BindingResult result) {
-        if (!subjectService.update(subject) || result.hasErrors())
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(subject, HttpStatus.OK);
+    public ResponseEntity<Subject> update(@RequestBody @Valid Subject subject) {
+        return new ResponseEntity<>(subjectService.update(subject), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Subject> delete(@PathVariable("id") Long id) {
-        if (!subjectService.delete(id) || id == null)
+        if (!subjectService.delete(id))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(HttpStatus.OK);
     }

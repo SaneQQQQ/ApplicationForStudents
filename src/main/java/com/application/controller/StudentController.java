@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/students/", "/"})
+@RequestMapping({"/students", "/"})
 public class StudentController {
 
     private final StudentService studentService;
@@ -30,19 +30,17 @@ public class StudentController {
         return new ResponseEntity<>(studentService.create(student), HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Student> read(@PathVariable("id") Long id) {
         return new ResponseEntity<>(studentService.read(id), HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<Student> update(@RequestBody @Valid Student student) {
-        if (!studentService.update(student))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(student, HttpStatus.OK);
+        return new ResponseEntity<>(studentService.update(student), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Student> delete(@PathVariable("id") Long id) {
         if (!studentService.delete(id))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -64,26 +62,24 @@ public class StudentController {
         return new ResponseEntity<>(studentSubjectService.create(studentSubject), HttpStatus.OK);
     }
 
-    @GetMapping("{student_id}/marks/{subject_id}")
+    @GetMapping("/{student_id}/marks/{subject_id}")
     public ResponseEntity<StudentSubject> readMark(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) {
         return new ResponseEntity<>(studentSubjectService.read(studentId, subjectId), HttpStatus.OK);
     }
 
     @PutMapping("/marks")
     public ResponseEntity<StudentSubject> updateMark(@RequestBody @Valid StudentSubject studentSubject) {
-        if (!studentSubjectService.update(studentSubject))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(studentSubject, HttpStatus.OK);
+        return new ResponseEntity<>(studentSubjectService.update(studentSubject), HttpStatus.OK);
     }
 
-    @DeleteMapping("{student_id}/marks/{subject_id}")
+    @DeleteMapping("/{student_id}/marks/{subject_id}")
     public ResponseEntity<StudentSubject> deleteMark(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) {
         if (!studentSubjectService.delete(studentId, subjectId))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("{student_id}/marks")
+    @GetMapping("/{student_id}/marks")
     public ResponseEntity<List<StudentSubject>> readAllMarksByStudent(@PathVariable("student_id") Long studentId) {
         return new ResponseEntity<>(studentSubjectService.readAllByStudentId(studentId), HttpStatus.OK);
     }

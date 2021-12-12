@@ -34,12 +34,7 @@ public class StudentSubjectServiceImpl implements StudentSubjectService {
 
     @Override
     @Transactional
-    public boolean update(StudentSubject studentSubject) {
-        try {
-            StudentSubject readStudentSubject = read(studentSubject.getStudent().getId(), studentSubject.getSubject().getId());
-        } catch (EntityNotFoundException e) {
-            return false;
-        }
+    public StudentSubject update(StudentSubject studentSubject) {
         return studentSubjectDAO.update(studentSubject);
     }
 

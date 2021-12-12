@@ -10,7 +10,7 @@ public interface GroupService {
 
     Group read(Long id);
 
-    boolean update(Group group);
+    Group update(Group group);
 
     boolean delete(Long id);
 

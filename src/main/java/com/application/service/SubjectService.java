@@ -10,7 +10,7 @@ public interface SubjectService {
 
     Subject read(Long id);
 
-    boolean update(Subject subject);
+    Subject update(Subject subject);
 
     boolean delete(Long id);
 

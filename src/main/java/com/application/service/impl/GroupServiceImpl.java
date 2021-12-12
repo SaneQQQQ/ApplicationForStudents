@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -35,12 +34,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public boolean update(Group group) {
-        try {
-            Group readGroup = read(group.getId());
-        } catch (EntityNotFoundException e) {
-            return false;
-        }
+    public Group update(Group group) {
         return groupDAO.update(group);
     }
 
