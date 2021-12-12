@@ -3,6 +3,7 @@ package com.application.dao.impl;
 import com.application.dao.StudentSubjectDAO;
 import com.application.model.StudentSubject;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -29,9 +30,10 @@ public class StudentSubjectDAOImpl extends BaseOperationsDAOImpl<StudentSubject>
     public boolean delete(Long studentId, Long subjectId) {
         if (read(studentId, subjectId).isEmpty())
             return false;
-        sessionFactory.getCurrentSession().createNativeQuery("DELETE FROM students_subjects WHERE student_id=? AND subject_id=?", StudentSubject.class)
+        sessionFactory.getCurrentSession().createNativeQuery("DELETE FROM students_subjects WHERE student_id=? AND subject_id=?")
                 .setParameter(1, studentId)
-                .setParameter(2, subjectId);
+                .setParameter(2, subjectId)
+                .executeUpdate();
         return true;
     }
 
