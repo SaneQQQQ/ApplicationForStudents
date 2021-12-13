@@ -37,6 +37,7 @@ public class Student {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // TODO avoid FetchType.EAGER
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;

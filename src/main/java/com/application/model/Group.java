@@ -19,6 +19,7 @@ public class Group {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    // TODO why these symbols are allowed?
     @Pattern(regexp = "[A-Z0-9\\-]{1,16}", message = "Invalid Title. Title must be between 1-16 upper case characters or numbers, inclusive dashes")
     @Column(name = "title", nullable = false, unique = true, length = 16)
     private String title;

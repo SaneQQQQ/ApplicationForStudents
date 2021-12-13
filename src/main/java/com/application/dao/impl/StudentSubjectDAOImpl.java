@@ -17,17 +17,22 @@ import java.util.Optional;
 @Repository
 public class StudentSubjectDAOImpl extends BaseOperationsDAOImpl<StudentSubject> implements StudentSubjectDAO {
 
+    // TODO no need for this method, StudentSubjectId should be used as a parameter instead, this way the method from the BaseOperationsDAOImpl will be invoked
     public Optional<StudentSubject> read(Long studentId, Long subjectId) {
         StudentSubject studentSubject = sessionFactory.getCurrentSession().createNativeQuery("SELECT * FROM students_subjects WHERE student_id=? AND subject_id=?", StudentSubject.class)
                 .setParameter(1, studentId)
                 .setParameter(2, subjectId)
                 .getSingleResult();
+        // TODO leave curved brackets no matter what
         if (studentSubject == null)
             return Optional.empty();
         return Optional.of(studentSubject);
     }
 
+    // TODO no need for this method, StudentSubjectId should be used as a parameter instead, this way the method from the BaseOperationsDAOImpl will be invoked
     public boolean delete(Long studentId, Long subjectId) {
+        // TODO Cannot resolve method 'isEmpty' in 'Optional'
+        // TODO leave curved brackets no matter what
         if (read(studentId, subjectId).isEmpty())
             return false;
         sessionFactory.getCurrentSession().createNativeQuery("DELETE FROM students_subjects WHERE student_id=? AND subject_id=?")

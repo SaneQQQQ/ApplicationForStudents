@@ -18,20 +18,24 @@ public abstract class BaseOperationsDAOImpl<T> implements BaseOperationsDAO<T> {
 
     @Autowired
     protected SessionFactory sessionFactory;
+    // TODO final class variables should be declared above non-final
     private final Class<T> tClass;
 
     @SuppressWarnings("unchecked")
+    // TODO better to use protected
     public BaseOperationsDAOImpl() {
         this.tClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     public Optional<T> create(T t) {
         Serializable id = sessionFactory.getCurrentSession().save(t);
+        // TODO redundant call
         return read(id);
     }
 
     public Optional<T> read(Serializable id) {
         T t = sessionFactory.getCurrentSession().get(tClass, id);
+        // TODO leave curved brackets no matter what
         if (t == null)
             return Optional.empty();
         return Optional.of(t);
@@ -44,7 +48,9 @@ public abstract class BaseOperationsDAOImpl<T> implements BaseOperationsDAO<T> {
 
     public boolean delete(Serializable id) {
         T entity = sessionFactory.getCurrentSession().get(tClass, id);
+        // TODO leave curved brackets no matter what
         if (entity == null)
+            // TODO why false?
             return false;
         sessionFactory.getCurrentSession().delete(entity);
         return true;

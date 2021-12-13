@@ -14,11 +14,13 @@ import javax.validation.constraints.Min;
 public class StudentSubject {
 
     @Id
+    // TODO avoid FetchType.EAGER
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
     @Id
+    // TODO avoid FetchType.EAGER
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;

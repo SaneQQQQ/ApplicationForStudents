@@ -21,6 +21,7 @@ public class StudentDAOImpl extends BaseOperationsDAOImpl<Student> implements St
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Student> criteriaQuery = criteriaBuilder.createQuery(Student.class);
         Root<Student> root = criteriaQuery.from(Student.class);
+        // TODO redundant brackets
         Predicate groupId = (criteriaBuilder.equal(root.get("group"), id));
         criteriaQuery.where(groupId);
         Query<Student> query = session.createQuery(criteriaQuery);
