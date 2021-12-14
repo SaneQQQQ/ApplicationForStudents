@@ -1,12 +1,12 @@
 package com.application.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Getter
 @Setter
 @Entity(name = "subjects")
@@ -19,8 +19,4 @@ public class Subject {
 
     @Column(name = "title", nullable = false, unique = true, length = 128)
     private String title;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "subject")
-    private Set<StudentSubject> studentSubjects;
 }
