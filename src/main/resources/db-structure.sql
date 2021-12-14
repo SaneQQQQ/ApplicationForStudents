@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS students_subjects CASCADE;
 
 CREATE TABLE groups(
     id BIGSERIAL NOT NULL,
-    title VARCHAR(16) NOT NULL UNIQUE,
+    title VARCHAR(5) NOT NULL UNIQUE,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
     PRIMARY KEY (id)
 );
@@ -76,8 +76,5 @@ INSERT INTO students_subjects(student_id, subject_id, mark) VALUES (6, 1, 58);
 INSERT INTO students_subjects(student_id, subject_id, mark) VALUES (6, 2, 75);
 INSERT INTO students_subjects(student_id, subject_id, mark) VALUES (6, 7, 60);
 INSERT INTO students_subjects(student_id, subject_id, mark) VALUES (6, 8, 89);
-
-
-
 
 
