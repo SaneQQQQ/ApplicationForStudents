@@ -2,6 +2,7 @@ package com.application.controller;
 
 import com.application.model.Student;
 import com.application.model.StudentSubject;
+import com.application.model.StudentSubjectId;
 import com.application.service.StudentService;
 import com.application.service.StudentSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,25 +27,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> create(@RequestBody @Valid Student student) {
-        return new ResponseEntity<>(studentService.create(student), HttpStatus.OK);
+    public ResponseEntity<String> create(@RequestBody @Valid Student student) {
+        return new ResponseEntity<>("Student with id " + studentService.create(student) + " was created", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> read(@PathVariable("id") Long id) {
         return new ResponseEntity<>(studentService.read(id), HttpStatus.OK);
-    }
-
-    @PutMapping
-    public ResponseEntity<Student> update(@RequestBody @Valid Student student) {
-        return new ResponseEntity<>(studentService.update(student), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Student> delete(@PathVariable("id") Long id) {
-        if (!studentService.delete(id))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
@@ -57,14 +46,32 @@ public class StudentController {
         return new ResponseEntity<>(studentService.readAllByGroupId(groupId), HttpStatus.OK);
     }
 
+    @PutMapping
+    public ResponseEntity<Student> update(@RequestBody @Valid Student student) {
+        return new ResponseEntity<>(studentService.update(student), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        studentService.delete(id);
+        return new ResponseEntity<>("Student with id " + id + " was deleted", HttpStatus.OK);
+    }
+
     @PostMapping("/marks")
-    public ResponseEntity<StudentSubject> createMark(@RequestBody @Valid StudentSubject studentSubject) {
-        return new ResponseEntity<>(studentSubjectService.create(studentSubject), HttpStatus.OK);
+    public ResponseEntity<String> createMark(@RequestBody @Valid StudentSubject studentSubject) {
+        StudentSubjectId studentSubjectId = studentSubjectService.create(studentSubject);
+        return new ResponseEntity<>("Mark with student_id " + studentSubjectId.getStudent().getId() +
+                " and subject_id " + studentSubjectId.getSubject().getId() + " was created", HttpStatus.OK);
     }
 
     @GetMapping("/{student_id}/marks/{subject_id}")
     public ResponseEntity<StudentSubject> readMark(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) {
         return new ResponseEntity<>(studentSubjectService.read(studentId, subjectId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{student_id}/marks")
+    public ResponseEntity<List<StudentSubject>> readAllMarksByStudent(@PathVariable("student_id") Long studentId) {
+        return new ResponseEntity<>(studentSubjectService.readAllByStudentId(studentId), HttpStatus.OK);
     }
 
     @PutMapping("/marks")
@@ -73,14 +80,8 @@ public class StudentController {
     }
 
     @DeleteMapping("/{student_id}/marks/{subject_id}")
-    public ResponseEntity<StudentSubject> deleteMark(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) {
-        if (!studentSubjectService.delete(studentId, subjectId))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/{student_id}/marks")
-    public ResponseEntity<List<StudentSubject>> readAllMarksByStudent(@PathVariable("student_id") Long studentId) {
-        return new ResponseEntity<>(studentSubjectService.readAllByStudentId(studentId), HttpStatus.OK);
+    public ResponseEntity<String> deleteMark(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) {
+        studentSubjectService.delete(studentId, subjectId);
+        return new ResponseEntity<>("Mark with student_id " + studentId + " and subject_id " + subjectId + " was deleted", HttpStatus.OK);
     }
 }

@@ -22,13 +22,18 @@ public class SubjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Subject> create(@RequestBody @Valid Subject subject) {
-        return new ResponseEntity<>(subjectService.create(subject), HttpStatus.OK);
+    public ResponseEntity<String> create(@RequestBody @Valid Subject subject) {
+        return new ResponseEntity<>("Subject with id " + subjectService.create(subject) + " was created", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Subject> read(@PathVariable("id") Long id) {
         return new ResponseEntity<>(subjectService.read(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Subject>> readAll() {
+        return new ResponseEntity<>(subjectService.readAll(), HttpStatus.OK);
     }
 
     @PutMapping
@@ -37,14 +42,8 @@ public class SubjectController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Subject> delete(@PathVariable("id") Long id) {
-        if (!subjectService.delete(id))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Subject>> readAll() {
-        return new ResponseEntity<>(subjectService.readAll(), HttpStatus.OK);
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        subjectService.delete(id);
+        return new ResponseEntity<>("Subject with id " + id + " was deleted", HttpStatus.OK);
     }
 }

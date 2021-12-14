@@ -3,7 +3,6 @@ package com.application.dao.impl;
 import com.application.dao.StudentSubjectDAO;
 import com.application.model.StudentSubject;
 import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class StudentSubjectDAOImpl extends BaseOperationsDAOImpl<StudentSubject> implements StudentSubjectDAO {
+public class StudentSubjectDAOImpl extends BaseDAOImpl<StudentSubject> implements StudentSubjectDAO {
 
     // TODO no need for this method, StudentSubjectId should be used as a parameter instead, this way the method from the BaseOperationsDAOImpl will be invoked
     public Optional<StudentSubject> read(Long studentId, Long subjectId) {
@@ -23,18 +22,16 @@ public class StudentSubjectDAOImpl extends BaseOperationsDAOImpl<StudentSubject>
                 .setParameter(1, studentId)
                 .setParameter(2, subjectId)
                 .getSingleResult();
-        // TODO leave curved brackets no matter what
-        if (studentSubject == null)
+        if (studentSubject == null) {
             return Optional.empty();
+        }
+        studentSubject.getStudent().getGroup().getTitle();
+        studentSubject.getSubject().getTitle();
         return Optional.of(studentSubject);
     }
 
     // TODO no need for this method, StudentSubjectId should be used as a parameter instead, this way the method from the BaseOperationsDAOImpl will be invoked
     public boolean delete(Long studentId, Long subjectId) {
-        // TODO Cannot resolve method 'isEmpty' in 'Optional'
-        // TODO leave curved brackets no matter what
-        if (read(studentId, subjectId).isEmpty())
-            return false;
         sessionFactory.getCurrentSession().createNativeQuery("DELETE FROM students_subjects WHERE student_id=? AND subject_id=?")
                 .setParameter(1, studentId)
                 .setParameter(2, subjectId)
@@ -50,6 +47,12 @@ public class StudentSubjectDAOImpl extends BaseOperationsDAOImpl<StudentSubject>
         Predicate studentId = (criteriaBuilder.equal(root.get("student"), id));
         criteriaQuery.where(studentId);
         Query<StudentSubject> query = session.createQuery(criteriaQuery);
-        return query.getResultList();
+        List<StudentSubject> studentSubjects = query.getResultList();
+        // TODO move to the service layer
+        for (StudentSubject studentSubject : studentSubjects) {
+            studentSubject.getStudent().getGroup().getTitle();
+            studentSubject.getSubject().getTitle();
+        }
+        return studentSubjects;
     }
 }

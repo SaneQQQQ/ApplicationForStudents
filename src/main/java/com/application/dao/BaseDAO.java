@@ -4,18 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-// TODO interface name
-public interface BaseOperationsDAO<T> {
+public interface BaseDAO<T> {
 
-    // TODO why optional?
-    Optional<T> create(T t);
+    Serializable create(T t);
 
     Optional<T> read(Serializable id);
+
+    List<T> readAll();
 
     T update(T t);
 
     boolean delete(Serializable id);
-
-    // TODO better to place it after the read method
-    List<T> readAll();
 }

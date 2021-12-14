@@ -22,26 +22,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public Student create(Student student) {
-        return studentDAO.create(student).orElseThrow(() -> new EntityNotFoundException("Student with id " + student.getId() + " was not created"));
+    public Long create(Student student) {
+        return (Long) studentDAO.create(student);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Student read(Long id) {
         return studentDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Student with id " + id + " not found"));
-    }
-
-    @Override
-    @Transactional
-    public Student update(Student student) {
-        return studentDAO.update(student);
-    }
-
-    @Override
-    @Transactional
-    public boolean delete(Long id) {
-        return studentDAO.delete(id);
     }
 
     @Override
@@ -54,5 +42,20 @@ public class StudentServiceImpl implements StudentService {
     @Transactional(readOnly = true)
     public List<Student> readAllByGroupId(Long id) {
         return studentDAO.readAllByGroupId(id);
+    }
+
+    @Override
+    @Transactional
+    public Student update(Student student) {
+        return studentDAO.update(student);
+    }
+
+    @Override
+    @Transactional
+    public boolean delete(Long id) {
+        if (!studentDAO.delete(id)) {
+            throw new EntityNotFoundException("Student with id " + id + " not found");
+        }
+        return true;
     }
 }

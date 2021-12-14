@@ -1,6 +1,6 @@
 package com.application.dao.impl;
 
-import com.application.dao.BaseOperationsDAO;
+import com.application.dao.BaseDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -14,46 +14,28 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseOperationsDAOImpl<T> implements BaseOperationsDAO<T> {
+public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
+
+    private Class<T> tClass;
 
     @Autowired
     protected SessionFactory sessionFactory;
-    // TODO final class variables should be declared above non-final
-    private final Class<T> tClass;
 
     @SuppressWarnings("unchecked")
-    // TODO better to use protected
-    public BaseOperationsDAOImpl() {
+    protected BaseDAOImpl() {
         this.tClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public Optional<T> create(T t) {
-        Serializable id = sessionFactory.getCurrentSession().save(t);
-        // TODO redundant call
-        return read(id);
+    public Serializable create(T t) {
+        return sessionFactory.getCurrentSession().save(t);
     }
 
     public Optional<T> read(Serializable id) {
         T t = sessionFactory.getCurrentSession().get(tClass, id);
-        // TODO leave curved brackets no matter what
-        if (t == null)
+        if (t == null) {
             return Optional.empty();
+        }
         return Optional.of(t);
-    }
-
-    @SuppressWarnings("unchecked")
-    public T update(T t) {
-        return (T) sessionFactory.getCurrentSession().merge(t);
-    }
-
-    public boolean delete(Serializable id) {
-        T entity = sessionFactory.getCurrentSession().get(tClass, id);
-        // TODO leave curved brackets no matter what
-        if (entity == null)
-            // TODO why false?
-            return false;
-        sessionFactory.getCurrentSession().delete(entity);
-        return true;
     }
 
     public List<T> readAll() {
@@ -64,5 +46,20 @@ public abstract class BaseOperationsDAOImpl<T> implements BaseOperationsDAO<T> {
         criteriaQuery.select(root);
         Query<T> query = session.createQuery(criteriaQuery);
         return query.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public T update(T t) {
+        return (T) sessionFactory.getCurrentSession().merge(t);
+    }
+
+    public boolean delete(Serializable id) {
+        T entity = sessionFactory.getCurrentSession().get(tClass, id);
+        if (entity == null) {
+            // TODO why false?
+            return false;
+        }
+        sessionFactory.getCurrentSession().delete(entity);
+        return true;
     }
 }

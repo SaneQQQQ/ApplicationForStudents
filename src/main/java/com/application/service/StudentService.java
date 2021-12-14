@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface StudentService {
 
-    Student create(Student student);
+    Long create(Student student);
 
     Student read(Long id);
-
-    Student update(Student student);
-
-    boolean delete(Long id);
 
     List<Student> readAll();
 
     List<Student> readAllByGroupId(Long id);
+
+    Student update(Student student);
+
+    boolean delete(Long id);
 }

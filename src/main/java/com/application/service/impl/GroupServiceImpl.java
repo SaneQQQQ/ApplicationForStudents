@@ -22,14 +22,20 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public Group create(Group group) {
-        return groupDAO.create(group).orElseThrow(() -> new EntityNotFoundException("Group with id " + group.getId() + " was not created"));
+    public Long create(Group group) {
+        return (Long) groupDAO.create(group);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Group read(Long id) {
         return groupDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Group> readAll() {
+        return groupDAO.readAll();
     }
 
     @Override
@@ -41,12 +47,9 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public boolean delete(Long id) {
-        return groupDAO.delete(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Group> readAll() {
-        return groupDAO.readAll();
+        if (!groupDAO.delete(id)) {
+            throw new EntityNotFoundException("Group with id " + id + " not found");
+        }
+        return true;
     }
 }

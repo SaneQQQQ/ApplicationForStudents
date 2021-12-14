@@ -22,13 +22,18 @@ public class GroupController {
     }
 
     @PostMapping
-    public ResponseEntity<Group> create(@RequestBody @Valid Group group) {
-        return new ResponseEntity<>(groupService.create(group), HttpStatus.OK);
+    public ResponseEntity<String> create(@RequestBody @Valid Group group) {
+        return new ResponseEntity<>("Group with id " + groupService.create(group) + " was created", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Group> read(@PathVariable("id") Long id) {
         return new ResponseEntity<>(groupService.read(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Group>> readAll() {
+        return new ResponseEntity<>(groupService.readAll(), HttpStatus.OK);
     }
 
     @PutMapping
@@ -37,14 +42,8 @@ public class GroupController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Group> delete(@PathVariable("id") Long id) {
-        if (!groupService.delete(id))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Group>> readAll() {
-        return new ResponseEntity<>(groupService.readAll(), HttpStatus.OK);
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        groupService.delete(id);
+        return new ResponseEntity<>("Group with id " + id + " was deleted", HttpStatus.OK);
     }
 }

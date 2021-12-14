@@ -5,6 +5,6 @@ import com.application.model.Subject;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SubjectDAOImpl extends BaseOperationsDAOImpl<Subject> implements SubjectDAO {
+public class SubjectDAOImpl extends BaseDAOImpl<Subject> implements SubjectDAO {
 
 }

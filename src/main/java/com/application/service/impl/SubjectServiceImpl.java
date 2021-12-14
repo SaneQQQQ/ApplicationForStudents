@@ -22,14 +22,20 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional
-    public Subject create(Subject subject) {
-        return subjectDAO.create(subject).orElseThrow(() -> new EntityNotFoundException("Subject with id " + subject.getId() + " was not created"));
+    public Long create(Subject subject) {
+        return (Long) subjectDAO.create(subject);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Subject read(Long id) {
         return subjectDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Subject with id " + id + " not found"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Subject> readAll() {
+        return subjectDAO.readAll();
     }
 
     @Override
@@ -41,12 +47,9 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     @Transactional
     public boolean delete(Long id) {
-        return subjectDAO.delete(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Subject> readAll() {
-        return subjectDAO.readAll();
+        if (!subjectDAO.delete(id)) {
+            throw new EntityNotFoundException("Subject with id " + id + " not found");
+        }
+        return true;
     }
 }
