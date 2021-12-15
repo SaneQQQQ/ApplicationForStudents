@@ -29,20 +29,28 @@ public class StudentSubjectServiceImpl implements StudentSubjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public StudentSubject read(Long studentId, Long subjectId) {
-        return studentSubjectDAO.read(studentId, subjectId).orElseThrow(() -> new EntityNotFoundException("Mark with student_id " + studentId + " and subject_id " + subjectId + " not found"));
+    public FullStudentSubjectDTO read(Long studentId, Long subjectId) {
+        Student student = new Student();
+        student.setId(studentId);
+        Subject subject = new Subject();
+        subject.setId(subjectId);
+        StudentSubjectId studentSubjectId = new StudentSubjectId();
+        studentSubjectId.setSubject(subject);
+        studentSubjectId.setStudent(student);
+        return FullStudentSubjectMapper.INSTANCE.studentSubjectToStudentSubjectDTO(studentSubjectDAO.read(studentSubjectId).orElseThrow(() -> new EntityNotFoundException("Mark with student_id " + studentId + " and subject_id " + subjectId + " not found")));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<StudentSubject> readAllByStudentId(Long id) {
-        return studentSubjectDAO.readAllByStudentId(id);
+    public List<StudentSubjectDTO> readAllByStudentId(Long id) {
+        return studentSubjectDAO.readAllByStudentId(id).stream().map(StudentSubjectMapper.INSTANCE::studentSubjectToStudentSubjectDTO).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public StudentSubject update(StudentSubject studentSubject) {
-        return studentSubjectDAO.update(studentSubject);
+    public FullStudentSubjectDTO update(FullStudentSubjectDTO studentSubject) {
+        return FullStudentSubjectMapper.INSTANCE.studentSubjectToStudentSubjectDTO(studentSubjectDAO.update(FullStudentSubjectMapper.INSTANCE.studentSubjectDTOToStudentSubject(studentSubject)));
+
     }
 
     @Override

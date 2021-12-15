@@ -28,26 +28,26 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(readOnly = true)
-    public Student read(Long id) {
-        return studentDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Student with id " + id + " not found"));
+    public FullStudentDTO read(Long id) {
+        return FullStudentMapper.INSTANCE.studentToFullStudentDTO(studentDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Student with id " + id + " not found")));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Student> readAll() {
-        return studentDAO.readAll();
+    public List<FullStudentDTO> readAll() {
+        return studentDAO.readAll().stream().map(FullStudentMapper.INSTANCE::studentToFullStudentDTO).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Student> readAllByGroupId(Long id) {
-        return studentDAO.readAllByGroupId(id);
+    public List<StudentDTO> readAllByGroupId(Long id) {
+        return studentDAO.readAllByGroupId(id).stream().map(StudentMapper.INSTANCE::studentToStudentDTO).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public Student update(Student student) {
-        return studentDAO.update(student);
+    public FullStudentDTO update(FullStudentDTO student) {
+        return FullStudentMapper.INSTANCE.studentToFullStudentDTO(studentDAO.update(FullStudentMapper.INSTANCE.fullStudentDTOToStudent(student)));
     }
 
     @Override

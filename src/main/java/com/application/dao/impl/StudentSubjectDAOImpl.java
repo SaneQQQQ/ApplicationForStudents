@@ -47,12 +47,7 @@ public class StudentSubjectDAOImpl extends BaseDAOImpl<StudentSubject> implement
         Predicate studentId = (criteriaBuilder.equal(root.get("student"), id));
         criteriaQuery.where(studentId);
         Query<StudentSubject> query = session.createQuery(criteriaQuery);
-        List<StudentSubject> studentSubjects = query.getResultList();
-        // TODO move to the service layer
-        for (StudentSubject studentSubject : studentSubjects) {
-            studentSubject.getStudent().getGroup().getTitle();
-            studentSubject.getSubject().getTitle();
-        }
-        return studentSubjects;
+        return query.getResultList();
     }
+
 }
