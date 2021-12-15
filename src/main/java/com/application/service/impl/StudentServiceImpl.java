@@ -22,8 +22,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public Long create(Student student) {
-        return (Long) studentDAO.create(student);
+    public FullStudentDTO create(FullStudentDTO student) {
+        return FullStudentMapper.INSTANCE.studentToFullStudentDTO(studentDAO.create(FullStudentMapper.INSTANCE.fullStudentDTOToStudent(student)));
     }
 
     @Override
@@ -52,10 +52,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public boolean delete(Long id) {
-        if (!studentDAO.delete(id)) {
-            throw new EntityNotFoundException("Student with id " + id + " not found");
-        }
-        return true;
+    public void delete(Long id) {
+        studentDAO.delete(id);
     }
 }

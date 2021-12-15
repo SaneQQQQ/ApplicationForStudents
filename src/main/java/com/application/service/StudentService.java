@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface StudentService {
 
-    Long create(Student student);
+    FullStudentDTO create(FullStudentDTO student);
 
     Student read(Long id);
 
@@ -16,5 +16,5 @@ public interface StudentService {
 
     Student update(Student student);
 
-    boolean delete(Long id);
+    void delete(Long id);
 }

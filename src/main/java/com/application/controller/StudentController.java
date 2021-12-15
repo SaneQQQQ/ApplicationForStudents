@@ -27,8 +27,8 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody @Valid Student student) {
-        return new ResponseEntity<>("Student with id " + studentService.create(student) + " was created", HttpStatus.OK);
+    public ResponseEntity<FullStudentDTO> create(@RequestBody @Valid FullStudentDTO student) {
+        return new ResponseEntity<>(studentService.create(student), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -58,10 +58,8 @@ public class StudentController {
     }
 
     @PostMapping("/marks")
-    public ResponseEntity<String> createMark(@RequestBody @Valid StudentSubject studentSubject) {
-        StudentSubjectId studentSubjectId = studentSubjectService.create(studentSubject);
-        return new ResponseEntity<>("Mark with student_id " + studentSubjectId.getStudent().getId() +
-                " and subject_id " + studentSubjectId.getSubject().getId() + " was created", HttpStatus.OK);
+    public ResponseEntity<FullStudentSubjectDTO> createMark(@RequestBody @Valid FullStudentSubjectDTO studentSubject) {
+        return new ResponseEntity<>(studentSubjectService.create(studentSubject), HttpStatus.OK);
     }
 
     @GetMapping("/{student_id}/marks/{subject_id}")

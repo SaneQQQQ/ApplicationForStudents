@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface BaseDAO<T> {
 
-    Serializable create(T t);
+    T create(T t);
 
     Optional<T> read(Serializable id);
 

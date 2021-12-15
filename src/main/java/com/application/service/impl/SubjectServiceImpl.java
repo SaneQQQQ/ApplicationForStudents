@@ -22,8 +22,8 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional
-    public Long create(Subject subject) {
-        return (Long) subjectDAO.create(subject);
+    public SubjectDTO create(SubjectDTO subject) {
+        return SubjectMapper.INSTANCE.subjectToSubjectDTO(subjectDAO.create(SubjectMapper.INSTANCE.subjectDTOToSubject(subject)));
     }
 
     @Override
@@ -46,10 +46,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional
-    public boolean delete(Long id) {
-        if (!subjectDAO.delete(id)) {
-            throw new EntityNotFoundException("Subject with id " + id + " not found");
-        }
-        return true;
+    public void delete(Long id) {
+        subjectDAO.delete(id);
     }
 }

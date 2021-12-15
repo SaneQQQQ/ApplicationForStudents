@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SubjectService {
 
-    Long create(Subject subject);
+    SubjectDTO create(SubjectDTO subject);
 
     Subject read(Long id);
 
@@ -14,5 +14,5 @@ public interface SubjectService {
 
     Subject update(Subject subject);
 
-    boolean delete(Long id);
+    void delete(Long id);
 }

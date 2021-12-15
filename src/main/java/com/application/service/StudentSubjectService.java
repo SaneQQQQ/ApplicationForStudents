@@ -1,13 +1,13 @@
 package com.application.service;
 
-import com.application.model.StudentSubject;
-import com.application.model.StudentSubjectId;
+import com.application.dto.FullStudentSubjectDTO;
+import com.application.dto.StudentSubjectDTO;
 
 import java.util.List;
 
 public interface StudentSubjectService {
 
-    StudentSubjectId create(StudentSubject studentSubject);
+    FullStudentSubjectDTO create(FullStudentSubjectDTO studentSubject);
 
     StudentSubject read(Long studentId, Long subjectId);
 
@@ -15,5 +15,5 @@ public interface StudentSubjectService {
 
     StudentSubject update(StudentSubject studentSubject);
 
-    boolean delete(Long studentId, Long subjectId);
+    void delete(Long studentId, Long subjectId);
 }

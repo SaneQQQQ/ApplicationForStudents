@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GroupService {
 
-    Long create(Group group);
+    GroupDTO create(GroupDTO group);
 
     Group read(Long id);
 
@@ -14,5 +14,5 @@ public interface GroupService {
 
     Group update(Group group);
 
-    boolean delete(Long id);
+    void delete(Long id);
 }

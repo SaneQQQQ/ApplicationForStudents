@@ -22,8 +22,8 @@ public class SubjectController {
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody @Valid Subject subject) {
-        return new ResponseEntity<>("Subject with id " + subjectService.create(subject) + " was created", HttpStatus.OK);
+    public ResponseEntity<SubjectDTO> create(@RequestBody @Valid SubjectDTO subject) {
+        return new ResponseEntity<>(subjectService.create(subject), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

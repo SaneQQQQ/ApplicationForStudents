@@ -22,8 +22,8 @@ public class GroupController {
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody @Valid Group group) {
-        return new ResponseEntity<>("Group with id " + groupService.create(group) + " was created", HttpStatus.OK);
+    public ResponseEntity<GroupDTO> create(@RequestBody @Valid GroupDTO group) {
+        return new ResponseEntity<>(groupService.create(group), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

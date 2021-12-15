@@ -26,8 +26,9 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
         this.tClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public Serializable create(T t) {
-        return sessionFactory.getCurrentSession().save(t);
+    public T create(T t) {
+        sessionFactory.getCurrentSession().save(t);
+        return t;
     }
 
     public Optional<T> read(Serializable id) {
@@ -48,17 +49,15 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
         return query.getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     public T update(T t) {
-        return (T) sessionFactory.getCurrentSession().merge(t);
+        sessionFactory.getCurrentSession().update(t);
+        return t;
     }
 
     public boolean delete(Serializable id) {
         T entity = sessionFactory.getCurrentSession().get(tClass, id);
-        if (entity == null) {
-            // TODO why false?
-            return false;
-        }
+        if (entity == null)
+            return true;
         sessionFactory.getCurrentSession().delete(entity);
         return true;
     }

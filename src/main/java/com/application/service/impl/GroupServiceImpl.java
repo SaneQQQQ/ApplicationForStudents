@@ -22,8 +22,8 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public Long create(Group group) {
-        return (Long) groupDAO.create(group);
+    public GroupDTO create(GroupDTO group) {
+        return GroupMapper.INSTANCE.groupToGroupDTO(groupDAO.create(GroupMapper.INSTANCE.groupDTOToGroup(group)));
     }
 
     @Override
@@ -46,10 +46,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public boolean delete(Long id) {
-        if (!groupDAO.delete(id)) {
-            throw new EntityNotFoundException("Group with id " + id + " not found");
-        }
-        return true;
+    public void delete(Long id) {
+        groupDAO.delete(id);
     }
 }
