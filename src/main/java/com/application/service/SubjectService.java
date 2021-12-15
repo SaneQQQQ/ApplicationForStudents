@@ -1,6 +1,6 @@
 package com.application.service;
 
-import com.application.model.Subject;
+import com.application.dto.SubjectDTO;
 
 import java.util.List;
 
@@ -8,11 +8,11 @@ public interface SubjectService {
 
     SubjectDTO create(SubjectDTO subject);
 
-    Subject read(Long id);
+    SubjectDTO read(Long id);
 
-    List<Subject> readAll();
+    List<SubjectDTO> readAll();
 
-    Subject update(Subject subject);
+    SubjectDTO update(SubjectDTO subject);
 
     void delete(Long id);
 }

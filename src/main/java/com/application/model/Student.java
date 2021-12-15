@@ -1,7 +1,5 @@
 package com.application.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,9 +7,9 @@ import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Getter
 @Setter
 @Entity(name = "students")
@@ -32,7 +30,6 @@ public class Student {
     @Column(name = "email", nullable = false, unique = true, length = 128)
     private String email;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -41,10 +38,7 @@ public class Student {
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "student")
-    private Set<StudentSubject> studentSubjects;
-
     @Formula("(SELECT AVG(s.mark) FROM students_subjects AS s WHERE s.student_id = id)")
-    private Double averageRank;
+    private BigDecimal averageRank;
+
 }

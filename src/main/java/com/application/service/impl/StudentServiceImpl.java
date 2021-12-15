@@ -1,7 +1,10 @@
 package com.application.service.impl;
 
 import com.application.dao.impl.StudentDAOImpl;
-import com.application.model.Student;
+import com.application.dto.FullStudentDTO;
+import com.application.dto.StudentDTO;
+import com.application.mapper.FullStudentMapper;
+import com.application.mapper.StudentMapper;
 import com.application.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {

@@ -27,4 +27,5 @@ public class StudentSubject {
     @Max(100)
     @Column(name = "mark")
     private Integer mark;
+
 }

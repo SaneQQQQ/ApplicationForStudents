@@ -1,6 +1,6 @@
 package com.application.controller;
 
-import com.application.model.Group;
+import com.application.dto.GroupDTO;
 import com.application.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,17 +27,17 @@ public class GroupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Group> read(@PathVariable("id") Long id) {
+    public ResponseEntity<GroupDTO> read(@PathVariable("id") Long id) {
         return new ResponseEntity<>(groupService.read(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Group>> readAll() {
+    public ResponseEntity<List<GroupDTO>> readAll() {
         return new ResponseEntity<>(groupService.readAll(), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<Group> update(@RequestBody @Valid Group group) {
+    public ResponseEntity<GroupDTO> update(@RequestBody @Valid GroupDTO group) {
         return new ResponseEntity<>(groupService.update(group), HttpStatus.OK);
     }
 

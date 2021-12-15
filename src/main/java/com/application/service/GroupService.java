@@ -1,6 +1,6 @@
 package com.application.service;
 
-import com.application.model.Group;
+import com.application.dto.GroupDTO;
 
 import java.util.List;
 
@@ -8,11 +8,11 @@ public interface GroupService {
 
     GroupDTO create(GroupDTO group);
 
-    Group read(Long id);
+    GroupDTO read(Long id);
 
-    List<Group> readAll();
+    List<GroupDTO> readAll();
 
-    Group update(Group group);
+    GroupDTO update(GroupDTO group);
 
     void delete(Long id);
 }

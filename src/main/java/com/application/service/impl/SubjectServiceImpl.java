@@ -1,7 +1,8 @@
 package com.application.service.impl;
 
 import com.application.dao.impl.SubjectDAOImpl;
-import com.application.model.Subject;
+import com.application.dto.SubjectDTO;
+import com.application.mapper.SubjectMapper;
 import com.application.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -28,20 +30,20 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public Subject read(Long id) {
-        return subjectDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Subject with id " + id + " not found"));
+    public SubjectDTO read(Long id) {
+        return SubjectMapper.INSTANCE.subjectToSubjectDTO(subjectDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Subject with id " + id + " not found")));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Subject> readAll() {
-        return subjectDAO.readAll();
+    public List<SubjectDTO> readAll() {
+        return subjectDAO.readAll().stream().map(SubjectMapper.INSTANCE::subjectToSubjectDTO).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public Subject update(Subject subject) {
-        return subjectDAO.update(subject);
+    public SubjectDTO update(SubjectDTO subject) {
+        return SubjectMapper.INSTANCE.subjectToSubjectDTO(subjectDAO.update(SubjectMapper.INSTANCE.subjectDTOToSubject(subject)));
     }
 
     @Override

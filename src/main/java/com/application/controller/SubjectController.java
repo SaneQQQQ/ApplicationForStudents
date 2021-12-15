@@ -1,6 +1,6 @@
 package com.application.controller;
 
-import com.application.model.Subject;
+import com.application.dto.SubjectDTO;
 import com.application.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,17 +27,17 @@ public class SubjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Subject> read(@PathVariable("id") Long id) {
+    public ResponseEntity<SubjectDTO> read(@PathVariable("id") Long id) {
         return new ResponseEntity<>(subjectService.read(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Subject>> readAll() {
+    public ResponseEntity<List<SubjectDTO>> readAll() {
         return new ResponseEntity<>(subjectService.readAll(), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<Subject> update(@RequestBody @Valid Subject subject) {
+    public ResponseEntity<SubjectDTO> update(@RequestBody @Valid SubjectDTO subject) {
         return new ResponseEntity<>(subjectService.update(subject), HttpStatus.OK);
     }
 

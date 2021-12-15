@@ -1,7 +1,8 @@
 package com.application.service.impl;
 
 import com.application.dao.impl.GroupDAOImpl;
-import com.application.model.Group;
+import com.application.dto.GroupDTO;
+import com.application.mapper.GroupMapper;
 import com.application.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -28,20 +30,20 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public Group read(Long id) {
-        return groupDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found"));
+    public GroupDTO read(Long id) {
+        return GroupMapper.INSTANCE.groupToGroupDTO(groupDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found")));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Group> readAll() {
-        return groupDAO.readAll();
+    public List<GroupDTO> readAll() {
+        return groupDAO.readAll().stream().map(GroupMapper.INSTANCE::groupToGroupDTO).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public Group update(Group group) {
-        return groupDAO.update(group);
+    public GroupDTO update(GroupDTO group) {
+        return GroupMapper.INSTANCE.groupToGroupDTO(groupDAO.update(GroupMapper.INSTANCE.groupDTOToGroup(group)));
     }
 
     @Override

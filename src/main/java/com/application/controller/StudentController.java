@@ -1,8 +1,9 @@
 package com.application.controller;
 
-import com.application.model.Student;
-import com.application.model.StudentSubject;
-import com.application.model.StudentSubjectId;
+import com.application.dto.FullStudentSubjectDTO;
+import com.application.dto.StudentDTO;
+import com.application.dto.FullStudentDTO;
+import com.application.dto.StudentSubjectDTO;
 import com.application.service.StudentService;
 import com.application.service.StudentSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,22 +33,22 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> read(@PathVariable("id") Long id) {
+    public ResponseEntity<FullStudentDTO> read(@PathVariable("id") Long id) {
         return new ResponseEntity<>(studentService.read(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Student>> readAll() {
+    public ResponseEntity<List<FullStudentDTO>> readAll() {
         return new ResponseEntity<>(studentService.readAll(), HttpStatus.OK);
     }
 
     @GetMapping("/group/{group_id}")
-    public ResponseEntity<List<Student>> readAllByGroupId(@PathVariable("group_id") Long groupId) {
+    public ResponseEntity<List<StudentDTO>> readAllByGroupId(@PathVariable("group_id") Long groupId) {
         return new ResponseEntity<>(studentService.readAllByGroupId(groupId), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<Student> update(@RequestBody @Valid Student student) {
+    public ResponseEntity<FullStudentDTO> update(@RequestBody @Valid FullStudentDTO student) {
         return new ResponseEntity<>(studentService.update(student), HttpStatus.OK);
     }
 
@@ -63,17 +64,17 @@ public class StudentController {
     }
 
     @GetMapping("/{student_id}/marks/{subject_id}")
-    public ResponseEntity<StudentSubject> readMark(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) {
+    public ResponseEntity<FullStudentSubjectDTO> readMark(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) {
         return new ResponseEntity<>(studentSubjectService.read(studentId, subjectId), HttpStatus.OK);
     }
 
     @GetMapping("/{student_id}/marks")
-    public ResponseEntity<List<StudentSubject>> readAllMarksByStudent(@PathVariable("student_id") Long studentId) {
+    public ResponseEntity<List<StudentSubjectDTO>> readAllMarksByStudent(@PathVariable("student_id") Long studentId) {
         return new ResponseEntity<>(studentSubjectService.readAllByStudentId(studentId), HttpStatus.OK);
     }
 
     @PutMapping("/marks")
-    public ResponseEntity<StudentSubject> updateMark(@RequestBody @Valid StudentSubject studentSubject) {
+    public ResponseEntity<FullStudentSubjectDTO> updateMark(@RequestBody @Valid FullStudentSubjectDTO studentSubject) {
         return new ResponseEntity<>(studentSubjectService.update(studentSubject), HttpStatus.OK);
     }
 

@@ -9,11 +9,11 @@ public interface StudentSubjectService {
 
     FullStudentSubjectDTO create(FullStudentSubjectDTO studentSubject);
 
-    StudentSubject read(Long studentId, Long subjectId);
+    FullStudentSubjectDTO read(Long studentId, Long subjectId);
 
-    List<StudentSubject> readAllByStudentId(Long id);
+    List<StudentSubjectDTO> readAllByStudentId(Long id);
 
-    StudentSubject update(StudentSubject studentSubject);
+    FullStudentSubjectDTO update(FullStudentSubjectDTO studentSubject);
 
     void delete(Long studentId, Long subjectId);
 }

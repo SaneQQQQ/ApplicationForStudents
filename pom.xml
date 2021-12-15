@@ -90,6 +90,17 @@
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>2.12.5</version>
     </dependency>
+    <!-- DTO Mapping -->
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>1.4.2.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct-processor</artifactId>
+      <version>1.4.2.Final</version>
+    </dependency>
   </dependencies>
 
   <build>

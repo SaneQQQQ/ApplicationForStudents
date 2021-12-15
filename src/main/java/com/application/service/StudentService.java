@@ -1,6 +1,7 @@
 package com.application.service;
 
-import com.application.model.Student;
+import com.application.dto.FullStudentDTO;
+import com.application.dto.StudentDTO;
 
 import java.util.List;
 
@@ -8,13 +9,13 @@ public interface StudentService {
 
     FullStudentDTO create(FullStudentDTO student);
 
-    Student read(Long id);
+    FullStudentDTO read(Long id);
 
-    List<Student> readAll();
+    List<FullStudentDTO> readAll();
 
-    List<Student> readAllByGroupId(Long id);
+    List<StudentDTO> readAllByGroupId(Long id);
 
-    Student update(Student student);
+    FullStudentDTO update(FullStudentDTO student);
 
     void delete(Long id);
 }
