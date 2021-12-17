@@ -1,3 +1,6 @@
-ApplicationForStudents.iml
-target
 .idea
+BackEnd/.idea
+BackEnd/target
+FrontEnd/.angular
+FrontEnd/.vscode
+FrontEnd/node_modules
