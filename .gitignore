@@ -4,3 +4,4 @@ BackEnd/target
 FrontEnd/.angular
 FrontEnd/.vscode
 FrontEnd/node_modules
+FrontEnd/package-lock.json
