@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/subjects")
@@ -35,16 +34,12 @@ public class SubjectController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SubjectDTO>> readAll() {
-        return new ResponseEntity<>(subjectService.readAll(), HttpStatus.OK);
-    }
-
-    @GetMapping(params = {"page", "size", "sort_by", "order"})
-    public ResponseEntity<Page<SubjectDTO>> readAllSortedByTitle(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                    @RequestParam(value = "size", defaultValue = "5") int size,
-                                                    @RequestParam(value = "sort_by", defaultValue = "title") String sortBy,
-                                                    @RequestParam(value = "order", defaultValue = "asc") String order) {
-        return new ResponseEntity<>(subjectService.readAllSortedByTitle(PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sortBy))), HttpStatus.OK);
+    public ResponseEntity<Page<SubjectDTO>> readAll(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                                    @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+                                                    @RequestParam(value = "sort_by", required = false) String sortBy,
+                                                    @RequestParam(value = "order", required = false) String order) {
+        Sort sort = sortBy != null && order != null ? Sort.by(Sort.Direction.fromString(order), sortBy) : Sort.unsorted();
+        return new ResponseEntity<>(subjectService.readAllSortedByTitle(PageRequest.of(page, size, sort)), HttpStatus.OK);
     }
 
     @PutMapping
