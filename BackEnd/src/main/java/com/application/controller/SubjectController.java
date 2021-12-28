@@ -3,6 +3,9 @@ package com.application.controller;
 import com.application.dto.SubjectDTO;
 import com.application.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,14 @@ public class SubjectController {
     @GetMapping
     public ResponseEntity<List<SubjectDTO>> readAll() {
         return new ResponseEntity<>(subjectService.readAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(params = {"page", "size", "sort_by", "order"})
+    public ResponseEntity<Page<SubjectDTO>> readAllSortedByTitle(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                    @RequestParam(value = "size", defaultValue = "5") int size,
+                                                    @RequestParam(value = "sort_by", defaultValue = "title") String sortBy,
+                                                    @RequestParam(value = "order", defaultValue = "asc") String order) {
+        return new ResponseEntity<>(subjectService.readAllSortedByTitle(PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sortBy))), HttpStatus.OK);
     }
 
     @PutMapping

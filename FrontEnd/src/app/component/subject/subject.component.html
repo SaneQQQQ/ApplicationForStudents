@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="mat-title">
+    <h4>Subjects</h4>
+  </div>
+  <table class="mat-elevation-z8" mat-table matSort [dataSource]="dataSource"
+         (matSortChange)="onSortChange($event)"
+         [matSortDisableClear]="true" [matSortStart]="'desc'">
+    <ng-container matColumnDef="title">
+      <th class="mat-tab-header" mat-header-cell mat-sort-header="" *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let subject">{{subject.title}}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th class="mat-tab-header" mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let row"></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator class="mat-paginator-container"
+                 [length]="pageTotalItems"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="onPageChange($event)"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>

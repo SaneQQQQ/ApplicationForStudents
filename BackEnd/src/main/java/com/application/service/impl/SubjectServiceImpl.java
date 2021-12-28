@@ -5,6 +5,8 @@ import com.application.dto.SubjectDTO;
 import com.application.mapper.SubjectMapper;
 import com.application.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +40,12 @@ public class SubjectServiceImpl implements SubjectService {
     @Transactional(readOnly = true)
     public List<SubjectDTO> readAll() {
         return subjectDAO.readAll().stream().map(SubjectMapper.INSTANCE::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SubjectDTO> readAllSortedByTitle(PageRequest pageRequest) {
+        return subjectDAO.readAllSortedByTitle(pageRequest).map(SubjectMapper.INSTANCE::toDTO);
     }
 
     @Override
