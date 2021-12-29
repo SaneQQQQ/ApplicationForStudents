@@ -1,0 +1,22 @@
+.spacer {
+  flex: 1 1 auto;
+}
+.button {
+  text-align: center;
+  margin-right: 1%;
+}
+.title {
+  margin-left: 10px;
+}
+.mat-icon {
+  margin-bottom: 2px;
+}
+.content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+.mat-title {
+  margin-top: 1rem;
+}
+
