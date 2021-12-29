@@ -1,7 +1,5 @@
-import {Subject} from "./subject";
-
-export interface SubjectPage {
-  content: Subject[];
+export interface Page<T> {
+  content: T[];
   totalElements: number;
   number: number;
   size: number;

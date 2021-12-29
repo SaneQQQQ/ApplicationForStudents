@@ -35,11 +35,11 @@ public class SubjectController {
 
     @GetMapping
     public ResponseEntity<Page<SubjectDTO>> readAll(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                    @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+                                                    @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
                                                     @RequestParam(value = "sort_by", required = false) String sortBy,
                                                     @RequestParam(value = "order", required = false) String order) {
         Sort sort = sortBy != null && order != null ? Sort.by(Sort.Direction.fromString(order), sortBy) : Sort.unsorted();
-        return new ResponseEntity<>(subjectService.readAllSortedByTitle(PageRequest.of(page, size, sort)), HttpStatus.OK);
+        return new ResponseEntity<>(subjectService.readAllSortedByTitle(PageRequest.of(page, pageSize, sort)), HttpStatus.OK);
     }
 
     @PutMapping
