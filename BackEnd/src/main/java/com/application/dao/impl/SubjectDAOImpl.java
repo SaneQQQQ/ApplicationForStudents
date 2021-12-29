@@ -22,19 +22,19 @@ public class SubjectDAOImpl extends BaseDAOImpl<Subject> implements SubjectDAO {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Subject> criteriaQuery = criteriaBuilder.createQuery(Subject.class);
         Root<Subject> root = criteriaQuery.from(Subject.class);
-        if (pageable.getSort().getOrderFor("title").getDirection().isDescending()) {
-            criteriaQuery.orderBy(criteriaBuilder.desc(root.get("title")));
-        } else {
-            criteriaQuery.orderBy(criteriaBuilder.asc(root.get("title")));
+        if(pageable.getSort().isSorted()) {
+            if (pageable.getSort().getOrderFor("title").getDirection().isDescending()) {
+                criteriaQuery.orderBy(criteriaBuilder.desc(root.get("title")));
+            } else {
+                criteriaQuery.orderBy(criteriaBuilder.asc(root.get("title")));
+            }
         }
         criteriaQuery.select(root);
         Query<Subject> query = session.createQuery(criteriaQuery);
-        int pageNumber = pageable.getPageNumber();
-        int pageSize = pageable.getPageSize();
-        query.setFirstResult((pageNumber) * pageSize);
-        query.setMaxResults(pageSize);
+        query.setFirstResult((int) pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
         List<Subject> subjects = query.getResultList();
-        Query queryCount = sessionFactory.getCurrentSession().createQuery("select count(s.id) from subjects s");
+        Query queryCount = session.createQuery("select count(s.id) from subjects s");
         long count = (long) queryCount.getSingleResult();
         return new PageImpl<>(subjects, pageable, count);
     }

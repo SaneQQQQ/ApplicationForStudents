@@ -16,12 +16,12 @@ export class SubjectComponent implements OnInit {
   dataSource!: MatTableDataSource<Subject>;
 
   page: number = 0;
-  pageSize: number = 5;
-  pageTotalItems: number = 0;
-  pageSizeOptions: number[] = [5, 10, 25];
+  pageSize: number = 10;
+  pageTotalItems: number = this.page * this.pageSize;
+  pageSizeOptions: number[] = [10, 15, 20, 25];
 
-  sortBy: string = 'title';
-  sortOrder: string = 'asc';
+  sortBy!: string;
+  sortOrder!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -33,20 +33,19 @@ export class SubjectComponent implements OnInit {
     this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder)
   }
 
-  public getSubjects(page: number, size: number, sortBy: string, sortOrder: string) {
+  public getSubjects(page: number, size: number, sortBy: string, sortOrder: string): void {
     this.subjectService.readAll(page, size, sortBy, sortOrder)
       .subscribe(
         response => {
-          console.log('response', response);
-          const {content, totalElements, pageNumber} = response;
+          const {content, totalElements, number} = response;
           this.pageTotalItems = totalElements;
-          this.page = pageNumber;
+          this.page = number;
           this.dataSource = new MatTableDataSource<Subject>(content);
         }
       )
   }
 
-  public onPageChange(event: PageEvent) {
+  public onPageChange(event: PageEvent): void {
     if (this.pageSize != event.pageSize) {
       this.paginator.firstPage();
       this.page = 0;
@@ -61,7 +60,7 @@ export class SubjectComponent implements OnInit {
     }
   }
 
-  public onSortChange(event: Sort) {
+  public onSortChange(event: Sort): void {
     this.paginator.firstPage();
     this.page = 0;
     this.sortBy = event.active;
