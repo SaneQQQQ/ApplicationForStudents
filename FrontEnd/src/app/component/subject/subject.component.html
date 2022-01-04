@@ -2,6 +2,10 @@
   <div class="mat-title">
     <h2>Subjects</h2>
   </div>
+  <div class="mat-button-toggle">
+    <button class="addButton" mat-raised-button color="primary" (click)="openDialog()">Add
+    </button>
+  </div>
   <table class="mat-elevation-z8" mat-table matSort [dataSource]="dataSource"
          (matSortChange)="onSortChange($event)">
     <ng-container matColumnDef="title">

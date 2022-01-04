@@ -8,7 +8,7 @@ import {GroupComponent} from './component/group/group.component';
 import {SubjectComponent} from './component/subject/subject.component';
 import {GroupService} from './service/group.service';
 import {SubjectService} from './service/subject.service';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableModule} from '@angular/material/table';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
@@ -16,25 +16,29 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
-
-
+import {MatDialogModule} from "@angular/material/dialog";
+import {AddComponent} from './component/subject/add/add.component';
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
-    AppComponent, GroupComponent, SubjectComponent
+    AppComponent, GroupComponent, SubjectComponent, AddComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
     MatSortModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    MatInputModule
   ],
   providers: [GroupService, SubjectService],
   bootstrap: [AppComponent]
