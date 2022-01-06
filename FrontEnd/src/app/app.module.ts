@@ -17,12 +17,12 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDialogModule} from "@angular/material/dialog";
-import {AddComponent} from './component/subject/add/add.component';
+import {AddSubjectComponent} from './component/subject/add/add.component';
 import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
-    AppComponent, GroupComponent, SubjectComponent, AddComponent
+    AppComponent, GroupComponent, SubjectComponent, AddSubjectComponent
   ],
   imports: [
     BrowserModule,

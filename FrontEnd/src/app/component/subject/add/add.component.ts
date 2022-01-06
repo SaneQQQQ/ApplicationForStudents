@@ -1,27 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {SubjectService} from "../../../service/subject.service";
-
-export function uniqueValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    return control.value.hasError('notunique') ? {notUnique: true} : null;
-  }
-}
+import {uniqueValidator} from "../../../validation/unique.validator";
+import {Subject} from "../../../interface/subject";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css']
 })
-export class AddComponent implements OnInit {
+export class AddSubjectComponent implements OnInit {
 
   addForm!: FormGroup;
 
   title = new FormControl('',
     [Validators.required, Validators.maxLength(128), uniqueValidator]);
 
-  constructor(private subjectService: SubjectService, public dialogRef: MatDialogRef<AddComponent>) {
+  constructor(private subjectService: SubjectService, public dialogRef: MatDialogRef<AddSubjectComponent>) {
   }
 
   public ngOnInit(): void {
@@ -33,12 +30,13 @@ export class AddComponent implements OnInit {
 
   public onSubmit(): void {
     this.subjectService.create(this.addForm.value).subscribe({
-      next: (response: any) => {
+      next: (response: Subject) => {
         this.dialogRef.close();
       },
-      error: (err: any) => {
-        this.title.setErrors({'notunique': true}
-        )
+      error: (err: HttpErrorResponse) => {
+        if (err.status == 409) {
+          this.title.setErrors({'notunique': true})
+        }
       }
     });
   }
@@ -51,7 +49,7 @@ export class AddComponent implements OnInit {
       return 'Max length is 128 characters';
     }
     if (this.title.hasError('notunique')) {
-      return 'This title already exist';
+      return 'Subject with this title already exist';
     }
     return '';
   }

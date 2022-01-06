@@ -4,7 +4,7 @@ import {Subject} from "../../interface/subject";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {AddComponent} from "./add/add.component";
+import {AddSubjectComponent} from "./add/add.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -71,8 +71,8 @@ export class SubjectComponent implements OnInit {
     this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder);
   }
 
-  public openDialog(): void {
-    const dialogRef = this.dialog.open(AddComponent);
+  public openAddDialog(): void {
+    const dialogRef = this.dialog.open(AddSubjectComponent);
     dialogRef.afterClosed().subscribe(response => {
       this.clearSort();
     });
