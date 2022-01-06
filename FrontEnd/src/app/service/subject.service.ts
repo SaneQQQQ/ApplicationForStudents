@@ -22,6 +22,10 @@ export class SubjectService {
     return this.http.put<Subject>(`${this.apiBaseUrl}`, subject);
   }
 
+  public delete(id: number): Observable<string> {
+    return this.http.delete<string>(`${this.apiBaseUrl}/${id}`);
+  }
+
   public readAll(page: number, pageSize: number, sortBy: string, order: string): Observable<Page<Subject>> {
     if (Util.isNullOrEmpty(sortBy, order)) {
       return this.http.get<Page<Subject>>(`${this.apiBaseUrl}?page=${page}&page_size=${pageSize}`);
