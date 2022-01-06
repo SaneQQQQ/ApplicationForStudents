@@ -19,10 +19,11 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatDialogModule} from "@angular/material/dialog";
 import {AddSubjectComponent} from './component/subject/add/add.component';
 import {MatInputModule} from "@angular/material/input";
+import {UpdateSubjectComponent} from "./component/subject/update/update.component";
 
 @NgModule({
   declarations: [
-    AppComponent, GroupComponent, SubjectComponent, AddSubjectComponent
+    AppComponent, GroupComponent, SubjectComponent, AddSubjectComponent, UpdateSubjectComponent
   ],
   imports: [
     BrowserModule,
