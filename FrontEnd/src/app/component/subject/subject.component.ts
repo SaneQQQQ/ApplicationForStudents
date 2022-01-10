@@ -6,6 +6,7 @@ import {MatSort, Sort} from "@angular/material/sort";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {AddSubjectComponent} from "./add/add.component";
 import {MatDialog} from "@angular/material/dialog";
+import {UpdateSubjectComponent} from "./update/update.component";
 
 @Component({
   selector: 'app-subject',
@@ -73,6 +74,15 @@ export class SubjectComponent implements OnInit {
 
   public openAddDialog(): void {
     const dialogRef = this.dialog.open(AddSubjectComponent);
+    dialogRef.afterClosed().subscribe(response => {
+      this.clearSort();
+    });
+  }
+
+  public openUpdateDialog(element: Subject): void {
+    const dialogRef = this.dialog.open(UpdateSubjectComponent, {
+      data: element
+    });
     dialogRef.afterClosed().subscribe(response => {
       this.clearSort();
     });
