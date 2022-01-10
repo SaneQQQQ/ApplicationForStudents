@@ -7,6 +7,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {AddSubjectComponent} from "./add/add.component";
 import {MatDialog} from "@angular/material/dialog";
 import {UpdateSubjectComponent} from "./update/update.component";
+import {DeleteSubjectComponent} from "./delete/delete.component";
 
 @Component({
   selector: 'app-subject',
@@ -81,6 +82,15 @@ export class SubjectComponent implements OnInit {
 
   public openUpdateDialog(element: Subject): void {
     const dialogRef = this.dialog.open(UpdateSubjectComponent, {
+      data: element
+    });
+    dialogRef.afterClosed().subscribe(response => {
+      this.clearSort();
+    });
+  }
+
+  public openDeleteDialog(element: Subject): void {
+    const dialogRef = this.dialog.open(DeleteSubjectComponent, {
       data: element
     });
     dialogRef.afterClosed().subscribe(response => {

@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/subjects")
@@ -48,8 +50,8 @@ public class SubjectController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Map<String, String>> delete(@PathVariable("id") Long id) {
         subjectService.delete(id);
-        return new ResponseEntity<>("Subject with id " + id + " was deleted", HttpStatus.OK);
+        return new ResponseEntity<>(Collections.singletonMap("message", "Subject with id " + id + " was deleted"), HttpStatus.OK);
     }
 }
