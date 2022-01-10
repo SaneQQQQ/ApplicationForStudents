@@ -22,6 +22,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <div class="no-data" *ngIf="pageTotalItems == 0">No Data Found</div>
   <mat-paginator class="mat-paginator-container"
                  [length]="pageTotalItems"
                  [pageSize]="pageSize"

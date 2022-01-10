@@ -4,17 +4,13 @@ import com.application.dto.SubjectDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.List;
-
 public interface SubjectService {
 
     SubjectDTO create(SubjectDTO subject);
 
     SubjectDTO read(Long id);
 
-    List<SubjectDTO> readAll();
-
-    Page<SubjectDTO> readAllSortedByTitle(PageRequest pageRequest);
+    Page<SubjectDTO> readAll(PageRequest pageRequest);
 
     SubjectDTO update(SubjectDTO subject);
 

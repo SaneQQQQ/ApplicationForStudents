@@ -5,12 +5,12 @@ import com.application.dto.GroupDTO;
 import com.application.mapper.GroupMapper;
 import com.application.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -36,8 +36,8 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<GroupDTO> readAll() {
-        return groupDAO.readAll().stream().map(GroupMapper.INSTANCE::toDTO).collect(Collectors.toList());
+    public Page<GroupDTO> readAll(PageRequest pageRequest) {
+        return groupDAO.readAll(pageRequest).map(GroupMapper.INSTANCE::toDTO);
     }
 
     @Override

@@ -14,5 +14,4 @@ public class StudentSubjectId implements Serializable {
     private Student student;
 
     private Subject subject;
-
 }

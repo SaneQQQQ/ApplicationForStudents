@@ -10,12 +10,12 @@ import com.application.model.StudentSubjectId;
 import com.application.model.Subject;
 import com.application.service.StudentSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentSubjectServiceImpl implements StudentSubjectService {
@@ -48,8 +48,8 @@ public class StudentSubjectServiceImpl implements StudentSubjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<StudentSubjectDTO> readAllByStudentId(Long id) {
-        return studentSubjectDAO.readAllByStudentId(id).stream().map(StudentSubjectMapper.INSTANCE::toDTO).collect(Collectors.toList());
+    public Page<StudentSubjectDTO> readAllByStudentId(Long id, PageRequest pageRequest) {
+        return studentSubjectDAO.readAllByStudentId(id, pageRequest).map(StudentSubjectMapper.INSTANCE::toDTO);
     }
 
     @Override

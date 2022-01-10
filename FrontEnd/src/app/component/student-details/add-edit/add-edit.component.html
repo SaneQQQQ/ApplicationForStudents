@@ -1,0 +1,48 @@
+<form [formGroup]="addForm">
+  <h2 *ngIf="data.element == null; else update">Add Mark</h2>
+  <ng-template #update><h2>Update Mark</h2></ng-template>
+  <mat-dialog-content>
+    <div class="form-container">
+      <div class="mat-title"><label>Student:</label></div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Student</mat-label>
+        <input matInput value="{{data.firstName}} {{data.lastName}}" readonly>
+      </mat-form-field>
+    </div>
+    <div *ngIf="data.element == null; else updateSelect" class="form-container">
+      <div class="mat-title"><label>Subject:</label></div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Subject</mat-label>
+        <mat-select [formControl]="subject" placeholder="Select Subject" [compareWith]="compareWith">
+          <mat-option *ngFor="let option of options" [value]="option">
+            {{option.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addForm.controls['subject'].invalid">{{getSubjectErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <ng-template #updateSelect>
+      <div class="form-container">
+        <div class="mat-title"><label>Subject:</label></div>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Subject</mat-label>
+          <input matInput value="{{data.element.subject.title}}" readonly>
+        </mat-form-field>
+      </div>
+    </ng-template>
+    <div class="form-container">
+      <div class="mat-title"><label>Mark:</label></div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Mark</mat-label>
+        <input matInput formControlName="mark" placeholder="Enter Mark">
+        <mat-error *ngIf="addForm.controls['mark'].invalid">{{getMarkErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mat-buttons">
+    <button mat-raised-button class="button" color="primary" type="submit" (click)="onSubmit()"
+            [disabled]="!addForm.valid || !addForm.dirty">Save
+    </button>
+    <button mat-raised-button class="button" color="primary" type="button" (click)="dialogRef.close()">Cancel</button>
+  </mat-dialog-actions>
+</form>

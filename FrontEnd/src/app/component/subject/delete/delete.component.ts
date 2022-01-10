@@ -10,6 +10,7 @@ import {HttpErrorResponse} from "@angular/common/http";
   styleUrls: ['./delete.component.css']
 })
 export class DeleteSubjectComponent implements OnInit {
+
   hasRelations: boolean = false;
 
   constructor(private subjectService: SubjectService,

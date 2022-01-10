@@ -13,5 +13,4 @@ public interface FullStudentMapper {
     FullStudentDTO toDTO(Student student);
 
     Student toEntity(FullStudentDTO dto);
-
 }

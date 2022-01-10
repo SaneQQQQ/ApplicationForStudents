@@ -13,5 +13,4 @@ public interface SubjectMapper {
     SubjectDTO toDTO(Subject subject);
 
     Subject toEntity(SubjectDTO dto);
-
 }

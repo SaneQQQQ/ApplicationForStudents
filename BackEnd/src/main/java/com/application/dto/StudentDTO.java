@@ -19,5 +19,4 @@ public class StudentDTO {
 
     @Digits(integer = 3, fraction = 1)
     private double averageRank;
-
 }

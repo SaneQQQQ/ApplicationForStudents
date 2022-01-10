@@ -6,7 +6,6 @@ import {Page} from "../interface/page";
 import {Subject} from "../interface/subject";
 import {Util} from "../util";
 
-
 @Injectable()
 export class SubjectService {
   private apiBaseUrl = environment.apiBaseUrl + '/subjects';

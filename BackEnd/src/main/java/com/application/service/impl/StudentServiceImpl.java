@@ -7,12 +7,12 @@ import com.application.mapper.FullStudentMapper;
 import com.application.mapper.StudentMapper;
 import com.application.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -38,14 +38,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<FullStudentDTO> readAll() {
-        return studentDAO.readAll().stream().map(FullStudentMapper.INSTANCE::toDTO).collect(Collectors.toList());
+    public Page<FullStudentDTO> readAll(PageRequest pageRequest) {
+        return studentDAO.readAll(pageRequest).map(FullStudentMapper.INSTANCE::toDTO);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<StudentDTO> readAllByGroupId(Long id) {
-        return studentDAO.readAllByGroupId(id).stream().map(StudentMapper.INSTANCE::toDTO).collect(Collectors.toList());
+    public Page<StudentDTO> readAllByGroupId(Long id, PageRequest pageRequest) {
+        return studentDAO.readAllByGroupId(id, pageRequest).map(StudentMapper.INSTANCE::toDTO);
     }
 
     @Override
