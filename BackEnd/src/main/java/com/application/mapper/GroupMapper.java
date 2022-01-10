@@ -13,5 +13,4 @@ public interface GroupMapper {
     GroupDTO toDTO(Group group);
 
     Group toEntity(GroupDTO dto);
-
 }

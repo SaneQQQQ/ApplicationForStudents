@@ -2,8 +2,8 @@ package com.application.service;
 
 import com.application.dto.FullStudentDTO;
 import com.application.dto.StudentDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 public interface StudentService {
 
@@ -11,9 +11,9 @@ public interface StudentService {
 
     FullStudentDTO read(Long id);
 
-    List<FullStudentDTO> readAll();
+    Page<FullStudentDTO> readAll(PageRequest pageRequest);
 
-    List<StudentDTO> readAllByGroupId(Long id);
+    Page<StudentDTO> readAllByGroupId(Long id, PageRequest pageRequest);
 
     FullStudentDTO update(FullStudentDTO student);
 

@@ -41,7 +41,7 @@ public class SubjectController {
                                                     @RequestParam(value = "sort_by", required = false) String sortBy,
                                                     @RequestParam(value = "order", required = false) String order) {
         Sort sort = sortBy != null && order != null ? Sort.by(Sort.Direction.fromString(order), sortBy) : Sort.unsorted();
-        return new ResponseEntity<>(subjectService.readAllSortedByTitle(PageRequest.of(page, pageSize, sort)), HttpStatus.OK);
+        return new ResponseEntity<>(subjectService.readAll(PageRequest.of(page, pageSize, sort)), HttpStatus.OK);
     }
 
     @PutMapping

@@ -10,5 +10,4 @@ public class StudentSubjectDTO {
     private SubjectDTO subject;
 
     private int mark;
-
 }

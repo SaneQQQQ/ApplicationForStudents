@@ -10,5 +10,4 @@ public class SubjectDTO {
     private Long id;
 
     private String title;
-
 }

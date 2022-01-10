@@ -1,10 +1,10 @@
 package com.application.dao;
 
 import com.application.model.StudentSubject;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface StudentSubjectDAO extends BaseDAO<StudentSubject> {
 
-    List<StudentSubject> readAllByStudentId(Long id);
+    Page<StudentSubject> readAllByStudentId(Long id, Pageable pageable);
 }

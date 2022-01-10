@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -38,14 +36,8 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<SubjectDTO> readAll() {
-        return subjectDAO.readAll().stream().map(SubjectMapper.INSTANCE::toDTO).collect(Collectors.toList());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Page<SubjectDTO> readAllSortedByTitle(PageRequest pageRequest) {
-        return subjectDAO.readAllSortedByTitle(pageRequest).map(SubjectMapper.INSTANCE::toDTO);
+    public Page<SubjectDTO> readAll(PageRequest pageRequest) {
+        return subjectDAO.readAll(pageRequest).map(SubjectMapper.INSTANCE::toDTO);
     }
 
     @Override

@@ -1,0 +1,103 @@
+.container {
+  margin-right: 10%;
+  width: 85%;
+  height: 49.7%;
+  margin-bottom: 33.5%;
+}
+
+.mat-grid {
+  background-color: #e9e9e9;
+}
+
+.image {
+  width: 50%;
+}
+
+.details-container {
+  width: 75%;
+  height: 83%;
+  margin-bottom: 33.5%;
+}
+
+.details-title {
+  text-align: center;
+}
+
+.mat-icon {
+  margin-top: 10px;
+}
+
+.student-info {
+  margin-top: 30px;
+  width: 100%;
+  text-align: left;
+}
+
+.mat-title {
+  text-align: center;
+}
+
+.mat-button-toggle {
+  text-align: right;
+  margin-right: 0;
+  margin-bottom: 2rem;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 20px;
+}
+
+.mat-paginator-container {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.mat-tab-header {
+  background-color: #e9e9e9;
+  width: 41%;
+  text-align: center;
+}
+
+.mat-cell-buttons {
+  text-align: center;
+}
+
+.main-button {
+  width: 100%;
+  text-align: left;
+}
+
+.mat-flat-button {
+  text-align: left;
+  width: 5%;
+  margin-left: 0;
+}
+
+.button {
+  text-align: center;
+  margin-left: 23px;
+}
+
+.addButton {
+  width: 10rem;
+  text-align: center;
+}
+
+.mat-button-href {
+  text-decoration-color: #e9e9e9;
+  text-align: left;
+  width: 100%;
+}
+
+.table-empty {
+  text-align: center;
+  width: 100%;
+}
+
+.no-data {
+  text-align: center;
+}

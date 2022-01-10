@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface SubjectDAO extends BaseDAO<Subject> {
 
-    Page<Subject> readAllSortedByTitle(Pageable pageable);
+    Page<Subject> readAll(Pageable pageable);
 }

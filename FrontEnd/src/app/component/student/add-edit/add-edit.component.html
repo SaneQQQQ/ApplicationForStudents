@@ -1,0 +1,48 @@
+<form [formGroup]="addForm">
+  <h2 *ngIf="data == null; else update">Add Student</h2>
+  <ng-template #update><h2>Update Student</h2></ng-template>
+  <mat-dialog-content>
+    <div class="form-container">
+      <div class="mat-title"><label>First Name:</label></div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" placeholder="Enter First Name">
+        <mat-error *ngIf="addForm.controls['firstName'].invalid">{{getFirstNameErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-container">
+      <div class="mat-title"><label>Last Name:</label></div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" placeholder="Enter Last Name">
+        <mat-error *ngIf="addForm.controls['lastName'].invalid">{{getLastNameErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-container">
+      <div class="mat-title"><label>Email:</label></div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Enter Email">
+        <mat-error *ngIf="addForm.controls['email'].invalid">{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-container">
+      <div class="mat-title"><label>Group:</label></div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Group</mat-label>
+        <mat-select [formControl]="group" placeholder="Select Group" [compareWith]="compareWith">
+          <mat-option *ngFor="let option of options" [value]="option">
+            {{option.title}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addForm.controls['group'].invalid">{{getGroupErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mat-buttons">
+    <button mat-raised-button class="button" color="primary" type="submit" (click)="onSubmit()"
+            [disabled]="!addForm.valid || !addForm.dirty">Save
+    </button>
+    <button mat-raised-button class="button" color="primary" type="button" (click)="dialogRef.close()">Cancel</button>
+  </mat-dialog-actions>
+</form>

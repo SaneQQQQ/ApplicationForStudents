@@ -24,7 +24,6 @@
   </properties>
 
   <dependencies>
-    <!-- Model View Controller / DispatcherServlet-->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
@@ -35,8 +34,6 @@
       <artifactId>spring-data-commons</artifactId>
       <version>2.5.6</version>
     </dependency>
-
-    <!-- org.springframework.orm.hibernate5; HibernateTransactionManager, LocalSessionFactoryBean -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
@@ -52,32 +49,27 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!-- javax.persistence.* & org.hibernate.annotations.* -->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>5.5.7.Final</version>
     </dependency>
-    <!-- For Validation in controller -->
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>6.2.0.Final</version>
     </dependency>
-    <!-- For AbstractAnnotationConfigDispatcherServletInitializer -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
-    <!-- javax.validation.*; Min Max Email -->
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
       <version>2.0.1.Final</version>
     </dependency>
-    <!-- Driver for PostgreSQL org.postgresql.Driver -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -89,19 +81,16 @@
       <version>1.18.20</version>
       <scope>provided</scope>
     </dependency>
-    <!-- JSON -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.12.5</version>
     </dependency>
-    <!-- JSON LocalDateTime Format-->
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
       <version>2.12.5</version>
     </dependency>
-    <!-- DTO Mapping -->
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
@@ -113,10 +102,9 @@
       <version>1.4.2.Final</version>
     </dependency>
   </dependencies>
-
   <build>
     <finalName>ApplicationForStudents</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>

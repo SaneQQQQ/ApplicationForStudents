@@ -19,5 +19,4 @@ public class Subject {
     @NotBlank
     @Column(name = "title", nullable = false, unique = true, length = 128)
     private String title;
-
 }

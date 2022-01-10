@@ -7,6 +7,7 @@ import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -20,9 +21,11 @@ public class Student {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotBlank
     @Column(name = "first_name", nullable = false, length = 128)
     private String firstName;
 
+    @NotBlank
     @Column(name = "last_name", nullable = false, length = 128)
     private String lastName;
 
@@ -40,5 +43,4 @@ public class Student {
 
     @Formula("(SELECT AVG(s.mark) FROM students_subjects AS s WHERE s.student_id = id)")
     private BigDecimal averageRank;
-
 }

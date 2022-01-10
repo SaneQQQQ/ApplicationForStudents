@@ -17,16 +17,17 @@ import java.util.List;
 @Repository
 public class SubjectDAOImpl extends BaseDAOImpl<Subject> implements SubjectDAO {
 
-    public Page<Subject> readAllSortedByTitle(Pageable pageable) {
+    public Page<Subject> readAll(Pageable pageable) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Subject> criteriaQuery = criteriaBuilder.createQuery(Subject.class);
         Root<Subject> root = criteriaQuery.from(Subject.class);
-        if(pageable.getSort().isSorted()) {
-            if (pageable.getSort().getOrderFor("title").getDirection().isDescending()) {
-                criteriaQuery.orderBy(criteriaBuilder.desc(root.get("title")));
+        if (pageable.getSort().isSorted()) {
+            String property = pageable.getSort().iterator().next().getProperty();
+            if (pageable.getSort().getOrderFor(property).getDirection().isDescending()) {
+                criteriaQuery.orderBy(criteriaBuilder.desc(root.get(property)));
             } else {
-                criteriaQuery.orderBy(criteriaBuilder.asc(root.get("title")));
+                criteriaQuery.orderBy(criteriaBuilder.asc(root.get(property)));
             }
         }
         criteriaQuery.select(root);
