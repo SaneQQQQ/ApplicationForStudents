@@ -14,7 +14,6 @@ import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-// PSQLException, DataException, MethodArgumentNotValidException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -30,18 +29,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new CustomJsonResponse(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
-    // SQL Exceptions
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<CustomJsonResponse> constraintViolationExceptionHandler(ConstraintViolationException exception) {
         return new ResponseEntity<>(new CustomJsonResponse(exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).findFirst().get()), HttpStatus.BAD_REQUEST);
     }
 
-    // Pattern message
     @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<CustomJsonResponse> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException exception) {
-        return new ResponseEntity<>(new CustomJsonResponse(exception.getCause().getCause().getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new CustomJsonResponse(exception.getCause().getCause().getMessage()), HttpStatus.CONFLICT);
     }
 
     private static class CustomJsonResponse {

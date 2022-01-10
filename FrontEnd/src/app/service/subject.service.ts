@@ -14,11 +14,14 @@ export class SubjectService {
   constructor(private http: HttpClient) {
   }
 
-  public readAll(page: number, pageSize: number, sortBy: string, order: string): Observable<Page<Subject>> {
-    if (Util.isNullOrEmpty(sortBy, order)) {
-      return this.http.get<Page<Subject>>(`${this.apiBaseUrl}?page=${page}&pageSize=${pageSize}`);
-    }
-    return this.http.get<Page<Subject>>(`${this.apiBaseUrl}?page=${page}&pageSize=${pageSize}&sort_by=${sortBy}&order=${order}`);
+  public create(subject: Subject): Observable<Subject> {
+    return this.http.post<Subject>(`${this.apiBaseUrl}`, subject);
   }
 
+  public readAll(page: number, pageSize: number, sortBy: string, order: string): Observable<Page<Subject>> {
+    if (Util.isNullOrEmpty(sortBy, order)) {
+      return this.http.get<Page<Subject>>(`${this.apiBaseUrl}?page=${page}&page_size=${pageSize}`);
+    }
+    return this.http.get<Page<Subject>>(`${this.apiBaseUrl}?page=${page}&page_size=${pageSize}&sort_by=${sortBy}&order=${order}`);
+  }
 }

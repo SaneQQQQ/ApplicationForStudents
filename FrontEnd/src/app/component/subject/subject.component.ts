@@ -4,6 +4,8 @@ import {Subject} from "../../interface/subject";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {AddSubjectComponent} from "./add/add.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-subject',
@@ -14,6 +16,7 @@ export class SubjectComponent implements OnInit {
 
   displayedColumns: string[] = ['title', 'actions'];
   dataSource!: MatTableDataSource<Subject>;
+  subjects!: Subject[];
 
   page: number = 0;
   pageSize: number = 10;
@@ -26,21 +29,22 @@ export class SubjectComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private subjectService: SubjectService) {
+  constructor(private subjectService: SubjectService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder)
   }
 
-  public getSubjects(page: number, size: number, sortBy: string, sortOrder: string): void {
-    this.subjectService.readAll(page, size, sortBy, sortOrder)
+  public getSubjects(page: number, pageSize: number, sortBy: string, sortOrder: string): void {
+    this.subjectService.readAll(page, pageSize, sortBy, sortOrder)
       .subscribe(
         response => {
           const {content, totalElements, number} = response;
           this.pageTotalItems = totalElements;
           this.page = number;
-          this.dataSource = new MatTableDataSource<Subject>(content);
+          this.subjects = content;
+          this.dataSource = new MatTableDataSource<Subject>(this.subjects);
         }
       )
   }
@@ -52,7 +56,6 @@ export class SubjectComponent implements OnInit {
       this.pageTotalItems = event.length;
       this.pageSize = event.pageSize;
       this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder);
-
     } else {
       this.page = event.pageIndex;
       this.pageTotalItems = event.length;
@@ -66,5 +69,18 @@ export class SubjectComponent implements OnInit {
     this.sortBy = event.active;
     this.sortOrder = event.direction;
     this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder);
+  }
+
+  public openAddDialog(): void {
+    const dialogRef = this.dialog.open(AddSubjectComponent);
+    dialogRef.afterClosed().subscribe(response => {
+      this.clearSort();
+    });
+  }
+
+  private clearSort(): void {
+    this.sort.sort({id: '', start: 'asc', disableClear: false});
+    this.sortBy = '';
+    this.sortOrder = '';
   }
 }
