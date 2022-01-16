@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -60,5 +61,14 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
             return true;
         sessionFactory.getCurrentSession().delete(entity);
         return true;
+    }
+
+    protected Path<Object> createPath(String property, Root<T> root) {
+        String[] splitProp = property.split("\\.");
+        Path<Object> path = root.get(splitProp[0]);
+        for (int i = 1; i < splitProp.length; i++) {
+            path = path.get(splitProp[i]);
+        }
+        return path;
     }
 }

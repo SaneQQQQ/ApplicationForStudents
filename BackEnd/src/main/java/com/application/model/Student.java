@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -43,4 +44,7 @@ public class Student {
 
     @Formula("(SELECT AVG(s.mark) FROM students_subjects AS s WHERE s.student_id = id)")
     private BigDecimal averageRank;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
+    private Set<StudentSubject> marks;
 }

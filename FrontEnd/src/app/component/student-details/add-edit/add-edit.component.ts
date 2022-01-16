@@ -5,8 +5,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subject} from "../../../interface/subject";
 import {Mark} from "../../../interface/mark";
 import {SubjectService} from "../../../service/subject.service";
-import {uniqueValidator} from "../../../validation/unique.validator";
-import {HttpErrorResponse} from "@angular/common/http";
+import {noElementsValidator} from "../../../validation/noelements.validator";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: 'app-add-edit',
@@ -17,10 +17,11 @@ export class AddEditMarkComponent implements OnInit {
 
   addForm!: FormGroup;
 
+  optionsToDelete!: Subject[];
   options!: Subject[];
 
   student = new FormControl(this.data.student)
-  subject = new FormControl(this.data.element == null ? null : this.data.element.subject, [Validators.required, uniqueValidator]);
+  subject = new FormControl(this.data.element == null ? null : this.data.element.subject, [Validators.required, noElementsValidator]);
   mark = new FormControl(this.data.element == null ? null : this.data.element.mark, [Validators.required, Validators.pattern("[0-9]{1,3}$"), Validators.max(100), Validators.min(0)])
 
   constructor(private subjectService: SubjectService,
@@ -30,20 +31,30 @@ export class AddEditMarkComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.readGroups();
     this.addForm = new FormGroup({
       student: this.student,
       subject: this.subject,
       mark: this.mark
     });
+    if (this.data.element == null) {
+      this.readSubjects(this.data.student.id);
+    }
   }
 
-  public readGroups(): void {
-    this.subjectService.readAll(0, 1000, '', '').subscribe(
+  public readSubjects(id: number): void {
+    this.studentService.readAllMarksByStudent(id, 0, 1000, '', '')
+      .pipe(switchMap(response => {
+        this.optionsToDelete = response.content.map(value => value.subject);
+        return this.subjectService.readAll(0, 1000, '', '');
+      })).subscribe(
       response => {
-        this.options = response.content;
-      }
-    );
+        this.options = response.content.filter(value => !this.optionsToDelete.find(remove => remove.id == value.id))
+        if (this.options.length == 0) {
+          this.subject.setErrors({'noelements': true})
+        } else {
+          this.subject.setErrors({'noelements': false})
+        }
+      });
   }
 
   public onSubmit(): void {
@@ -51,22 +62,12 @@ export class AddEditMarkComponent implements OnInit {
       this.studentService.createMark(this.addForm.value).subscribe({
         next: (response: Mark) => {
           this.dialogRef.close();
-        },
-        error: (err: HttpErrorResponse) => {
-          if (err.status == 409) {
-            this.subject.setErrors({'notunique': true})
-          }
         }
       });
     } else {
       this.studentService.updateMark(this.addForm.value).subscribe({
         next: (response: Mark) => {
           this.dialogRef.close();
-        },
-        error: (err: HttpErrorResponse) => {
-          if (err.status == 409) {
-            this.subject.setErrors({'notunique': true})
-          }
         }
       });
     }
@@ -80,8 +81,8 @@ export class AddEditMarkComponent implements OnInit {
     if (this.subject.hasError('required')) {
       return 'Subject can not be empty';
     }
-    if (this.subject.hasError('notunique')) {
-      return 'Mark with this subject already exist';
+    if (this.subject.hasError('noelements')) {
+      return 'No options, student already has marks in all subjects';
     }
     return '';
   }
@@ -90,14 +91,8 @@ export class AddEditMarkComponent implements OnInit {
     if (this.mark.hasError('required')) {
       return 'Mark can not be empty';
     }
-    if (this.mark.hasError('pattern')) {
+    if (this.mark.hasError('pattern') || this.mark.hasError('max') || this.mark.hasError('min')) {
       return 'Mark should be integer between 0 and 100';
-    }
-    if (this.mark.hasError('min')) {
-      return 'Mark min size 0';
-    }
-    if (this.mark.hasError('max')) {
-      return 'Mark max size 100';
     }
     return '';
   }

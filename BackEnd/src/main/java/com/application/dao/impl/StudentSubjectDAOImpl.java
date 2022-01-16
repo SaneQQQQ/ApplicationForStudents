@@ -28,9 +28,9 @@ public class StudentSubjectDAOImpl extends BaseDAOImpl<StudentSubject> implement
         if (pageable.getSort().isSorted()) {
             String property = pageable.getSort().iterator().next().getProperty();
             if (pageable.getSort().getOrderFor(property).getDirection().isDescending()) {
-                criteriaQuery.orderBy(criteriaBuilder.desc(root.get(property)));
+                criteriaQuery.orderBy(criteriaBuilder.desc(createPath(property, root)));
             } else {
-                criteriaQuery.orderBy(criteriaBuilder.asc(root.get(property)));
+                criteriaQuery.orderBy(criteriaBuilder.asc(createPath(property, root)));
             }
         }
         Predicate studentId = (criteriaBuilder.equal(root.get("student"), id));
