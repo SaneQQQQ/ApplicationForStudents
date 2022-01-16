@@ -15,7 +15,7 @@ import {AddEditStudentComponent} from "./add-edit/add-edit.component";
 })
 export class StudentListComponent implements OnInit {
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'group', 'averageRank', 'actions'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'group.title', 'averageRank', 'actions'];
   dataSource!: MatTableDataSource<Student>;
   students!: Student[];
 

@@ -24,7 +24,7 @@ export class StudentComponent implements OnInit {
   studentGroupTitle!: string;
   studentAverageRank!: number;
 
-  displayedColumns: string[] = ['subject', 'mark', 'actions'];
+  displayedColumns: string[] = ['subject.title', 'mark', 'actions'];
   dataSource!: MatTableDataSource<Mark>;
   marks!: Mark[];
 

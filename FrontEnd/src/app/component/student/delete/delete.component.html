@@ -5,7 +5,7 @@
       <div class="mat-title"><label>Delete {{data.firstName}} {{data.lastName}}?</label></div>
     </div>
     <div class="form-container">
-      <mat-error *ngIf="hasRelations">This student still has marks</mat-error>
+      <mat-error>Are you sure? With the removal of a student you will delete all his marks</mat-error>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions class="mat-buttons">
