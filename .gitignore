@@ -1,6 +1,7 @@
 .idea
 BackEnd/.idea
 BackEnd/target
+FrontEnd/target
 FrontEnd/.angular
 FrontEnd/.vscode
 FrontEnd/node_modules
