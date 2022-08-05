@@ -16,6 +16,7 @@ import javax.persistence.EntityNotFoundException;
 public class GroupServiceImpl implements GroupService {
 
     private final GroupDAOImpl groupDAO;
+    private final GroupMapper groupMapper = GroupMapper.INSTANCE;
 
     @Autowired
     public GroupServiceImpl(GroupDAOImpl groupDAO) {
@@ -25,25 +26,27 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public GroupDTO create(GroupDTO group) {
-        return GroupMapper.INSTANCE.toDTO(groupDAO.create(GroupMapper.INSTANCE.toEntity(group)));
+        return groupMapper.toDTO(groupDAO.create(groupMapper.toEntity(group)));
     }
+
 
     @Override
     @Transactional(readOnly = true)
     public GroupDTO read(Long id) {
-        return GroupMapper.INSTANCE.toDTO(groupDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Group with id " + id + " not found")));
+        return groupMapper.toDTO(groupDAO.read(id).orElseThrow(
+                () -> new EntityNotFoundException("Group with id " + id + " not found")));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<GroupDTO> readAll(PageRequest pageRequest) {
-        return groupDAO.readAll(pageRequest).map(GroupMapper.INSTANCE::toDTO);
+        return groupDAO.readAll(pageRequest).map(groupMapper::toDTO);
     }
 
     @Override
     @Transactional
     public GroupDTO update(GroupDTO group) {
-        return GroupMapper.INSTANCE.toDTO(groupDAO.update(GroupMapper.INSTANCE.toEntity(group)));
+        return groupMapper.toDTO(groupDAO.update(groupMapper.toEntity(group)));
     }
 
     @Override

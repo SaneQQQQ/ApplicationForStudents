@@ -21,6 +21,8 @@ import javax.persistence.EntityNotFoundException;
 public class StudentSubjectServiceImpl implements StudentSubjectService {
 
     private final StudentSubjectDAOImpl studentSubjectDAO;
+    private final FullStudentSubjectMapper fullStudentSubjectMapper = FullStudentSubjectMapper.INSTANCE;
+    private final StudentSubjectMapper studentSubjectMapper = StudentSubjectMapper.INSTANCE;
 
     @Autowired
     public StudentSubjectServiceImpl(StudentSubjectDAOImpl studentSubjectDAO) {
@@ -30,38 +32,36 @@ public class StudentSubjectServiceImpl implements StudentSubjectService {
     @Override
     @Transactional
     public FullStudentSubjectDTO create(FullStudentSubjectDTO studentSubject) {
-        return FullStudentSubjectMapper.INSTANCE.toDTO(studentSubjectDAO.create(FullStudentSubjectMapper.INSTANCE.toEntity(studentSubject)));
+        return fullStudentSubjectMapper.toDTO(studentSubjectDAO.create(fullStudentSubjectMapper.toEntity(studentSubject)));
     }
 
     @Override
     @Transactional(readOnly = true)
     public FullStudentSubjectDTO read(Long studentId, Long subjectId) {
-        Student student = new Student();
-        student.setId(studentId);
-        Subject subject = new Subject();
-        subject.setId(subjectId);
-        StudentSubjectId studentSubjectId = new StudentSubjectId();
-        studentSubjectId.setSubject(subject);
-        studentSubjectId.setStudent(student);
-        return FullStudentSubjectMapper.INSTANCE.toDTO(studentSubjectDAO.read(studentSubjectId).orElseThrow(() -> new EntityNotFoundException("Mark with student_id " + studentId + " and subject_id " + subjectId + " not found")));
+        return fullStudentSubjectMapper.toDTO(studentSubjectDAO.read(createStudentSubjectId(studentId, subjectId)).orElseThrow(
+                () -> new EntityNotFoundException("Mark with student_id " + studentId + " and subject_id " + subjectId + " not found")));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<StudentSubjectDTO> readAllByStudentId(Long id, PageRequest pageRequest) {
-        return studentSubjectDAO.readAllByStudentId(id, pageRequest).map(StudentSubjectMapper.INSTANCE::toDTO);
+        return studentSubjectDAO.readAllByStudentId(id, pageRequest).map(studentSubjectMapper::toDTO);
     }
 
     @Override
     @Transactional
     public FullStudentSubjectDTO update(FullStudentSubjectDTO studentSubject) {
-        return FullStudentSubjectMapper.INSTANCE.toDTO(studentSubjectDAO.update(FullStudentSubjectMapper.INSTANCE.toEntity(studentSubject)));
+        return fullStudentSubjectMapper.toDTO(studentSubjectDAO.update(fullStudentSubjectMapper.toEntity(studentSubject)));
 
     }
 
     @Override
     @Transactional
     public void delete(Long studentId, Long subjectId) {
+        studentSubjectDAO.delete(createStudentSubjectId(studentId, subjectId));
+    }
+
+    private StudentSubjectId createStudentSubjectId(Long studentId, Long subjectId) {
         Student student = new Student();
         student.setId(studentId);
         Subject subject = new Subject();
@@ -69,6 +69,6 @@ public class StudentSubjectServiceImpl implements StudentSubjectService {
         StudentSubjectId studentSubjectId = new StudentSubjectId();
         studentSubjectId.setSubject(subject);
         studentSubjectId.setStudent(student);
-        studentSubjectDAO.delete(studentSubjectId);
+        return studentSubjectId;
     }
 }

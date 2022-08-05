@@ -17,45 +17,13 @@ import java.util.List;
 
 @Repository
 public class StudentDAOImpl extends BaseDAOImpl<Student> implements StudentDAO {
-
-    @Override
-    public Page<Student> readAll(Pageable pageable) {
-        Session session = sessionFactory.getCurrentSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Student> criteriaQuery = criteriaBuilder.createQuery(Student.class);
-        Root<Student> root = criteriaQuery.from(Student.class);
-        if (pageable.getSort().isSorted()) {
-            String property = pageable.getSort().iterator().next().getProperty();
-            if (pageable.getSort().getOrderFor(property).getDirection().isDescending()) {
-                criteriaQuery.orderBy(criteriaBuilder.desc(createPath(property, root)));
-            } else {
-                criteriaQuery.orderBy(criteriaBuilder.asc(createPath(property, root)));
-            }
-        }
-        criteriaQuery.select(root);
-        Query<Student> query = session.createQuery(criteriaQuery);
-        query.setFirstResult((int) pageable.getOffset());
-        query.setMaxResults(pageable.getPageSize());
-        List<Student> students = query.getResultList();
-        Query queryCount = session.createQuery("select count(s.id) from students s");
-        long count = (long) queryCount.getSingleResult();
-        return new PageImpl<>(students, pageable, count);
-    }
-
     @Override
     public Page<Student> readAllByGroupId(Long id, Pageable pageable) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Student> criteriaQuery = criteriaBuilder.createQuery(Student.class);
         Root<Student> root = criteriaQuery.from(Student.class);
-        if (pageable.getSort().isSorted()) {
-            String property = pageable.getSort().iterator().next().getProperty();
-            if (pageable.getSort().getOrderFor(property).getDirection().isDescending()) {
-                criteriaQuery.orderBy(criteriaBuilder.desc(root.get(property)));
-            } else {
-                criteriaQuery.orderBy(criteriaBuilder.asc(root.get(property)));
-            }
-        }
+        setSortOrder(pageable, criteriaBuilder, criteriaQuery, root);
         Predicate groupId = criteriaBuilder.equal(root.get("group"), id);
         criteriaQuery.where(groupId);
         Query<Student> query = session.createQuery(criteriaQuery);

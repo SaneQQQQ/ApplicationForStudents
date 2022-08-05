@@ -25,14 +25,7 @@ public class StudentSubjectDAOImpl extends BaseDAOImpl<StudentSubject> implement
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<StudentSubject> criteriaQuery = criteriaBuilder.createQuery(StudentSubject.class);
         Root<StudentSubject> root = criteriaQuery.from(StudentSubject.class);
-        if (pageable.getSort().isSorted()) {
-            String property = pageable.getSort().iterator().next().getProperty();
-            if (pageable.getSort().getOrderFor(property).getDirection().isDescending()) {
-                criteriaQuery.orderBy(criteriaBuilder.desc(createPath(property, root)));
-            } else {
-                criteriaQuery.orderBy(criteriaBuilder.asc(createPath(property, root)));
-            }
-        }
+        setSortOrder(pageable, criteriaBuilder, criteriaQuery, root);
         Predicate studentId = (criteriaBuilder.equal(root.get("student"), id));
         criteriaQuery.where(studentId);
         Query<StudentSubject> query = session.createQuery(criteriaQuery);
