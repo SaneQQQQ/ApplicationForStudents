@@ -16,6 +16,7 @@ import javax.persistence.EntityNotFoundException;
 public class SubjectServiceImpl implements SubjectService {
 
     private final SubjectDAOImpl subjectDAO;
+    private final SubjectMapper subjectMapper = SubjectMapper.INSTANCE;
 
     @Autowired
     public SubjectServiceImpl(SubjectDAOImpl subjectDAO) {
@@ -25,25 +26,26 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     @Transactional
     public SubjectDTO create(SubjectDTO subject) {
-        return SubjectMapper.INSTANCE.toDTO(subjectDAO.create(SubjectMapper.INSTANCE.toEntity(subject)));
+        return subjectMapper.toDTO(subjectDAO.create(subjectMapper.toEntity(subject)));
     }
 
     @Override
     @Transactional(readOnly = true)
     public SubjectDTO read(Long id) {
-        return SubjectMapper.INSTANCE.toDTO(subjectDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Subject with id " + id + " not found")));
+        return subjectMapper.toDTO(subjectDAO.read(id).orElseThrow(
+                () -> new EntityNotFoundException("Subject with id " + id + " not found")));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<SubjectDTO> readAll(PageRequest pageRequest) {
-        return subjectDAO.readAll(pageRequest).map(SubjectMapper.INSTANCE::toDTO);
+        return subjectDAO.readAll(pageRequest).map(subjectMapper::toDTO);
     }
 
     @Override
     @Transactional
     public SubjectDTO update(SubjectDTO subject) {
-        return SubjectMapper.INSTANCE.toDTO(subjectDAO.update(SubjectMapper.INSTANCE.toEntity(subject)));
+        return SubjectMapper.INSTANCE.toDTO(subjectDAO.update(subjectMapper.toEntity(subject)));
     }
 
     @Override

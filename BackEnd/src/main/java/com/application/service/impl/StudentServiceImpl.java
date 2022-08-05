@@ -18,6 +18,9 @@ import javax.persistence.EntityNotFoundException;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentDAOImpl studentDAO;
+    private final FullStudentMapper fullStudentMapper = FullStudentMapper.INSTANCE;
+    private final StudentMapper studentMapper = StudentMapper.INSTANCE;
+
 
     @Autowired
     public StudentServiceImpl(StudentDAOImpl studentDAO) {
@@ -27,31 +30,32 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public FullStudentDTO create(FullStudentDTO student) {
-        return FullStudentMapper.INSTANCE.toDTO(studentDAO.create(FullStudentMapper.INSTANCE.toEntity(student)));
+        return fullStudentMapper.toDTO(studentDAO.create(fullStudentMapper.toEntity(student)));
     }
 
     @Override
     @Transactional(readOnly = true)
     public FullStudentDTO read(Long id) {
-        return FullStudentMapper.INSTANCE.toDTO(studentDAO.read(id).orElseThrow(() -> new EntityNotFoundException("Student with id " + id + " not found")));
+        return fullStudentMapper.toDTO(studentDAO.read(id).orElseThrow(
+                () -> new EntityNotFoundException("Student with id " + id + " not found")));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<FullStudentDTO> readAll(PageRequest pageRequest) {
-        return studentDAO.readAll(pageRequest).map(FullStudentMapper.INSTANCE::toDTO);
+        return studentDAO.readAll(pageRequest).map(fullStudentMapper::toDTO);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<StudentDTO> readAllByGroupId(Long id, PageRequest pageRequest) {
-        return studentDAO.readAllByGroupId(id, pageRequest).map(StudentMapper.INSTANCE::toDTO);
+        return studentDAO.readAllByGroupId(id, pageRequest).map(studentMapper::toDTO);
     }
 
     @Override
     @Transactional
     public FullStudentDTO update(FullStudentDTO student) {
-        return FullStudentMapper.INSTANCE.toDTO(studentDAO.update(FullStudentMapper.INSTANCE.toEntity(student)));
+        return fullStudentMapper.toDTO(studentDAO.update(fullStudentMapper.toEntity(student)));
     }
 
     @Override

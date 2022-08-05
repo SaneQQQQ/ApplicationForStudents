@@ -32,7 +32,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<CustomJsonResponse> constraintViolationExceptionHandler(ConstraintViolationException exception) {
-        return new ResponseEntity<>(new CustomJsonResponse(exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).findFirst().get()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new CustomJsonResponse(exception.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage).findFirst().get()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
