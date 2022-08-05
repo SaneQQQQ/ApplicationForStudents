@@ -1,8 +1,10 @@
 package com.application.config;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -32,6 +34,7 @@ public class ApplicationConfig {
     }
 
     @Bean
+    @DependsOn("liquibase")
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
@@ -48,6 +51,15 @@ public class ApplicationConfig {
         dataSource.setUsername(environment.getRequiredProperty("hibernate.connection.username"));
         dataSource.setPassword(environment.getRequiredProperty("hibernate.connection.password"));
         return dataSource;
+    }
+
+    @Bean
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:db/changelog/db.changelog-master.yaml");
+        liquibase.setDataSource(dataSource());
+        liquibase.setShouldRun(environment.getProperty("liquibase.should_run", Boolean.class, Boolean.TRUE));
+        return liquibase;
     }
 
     @Bean

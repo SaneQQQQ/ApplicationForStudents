@@ -1,0 +1,267 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1659686623358-1
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - sequenceExists:
+                sequenceName: groups_id_seq
+      changes:
+        - createSequence:
+            sequenceName: groups_id_seq
+  - changeSet:
+      id: 1659686623358-2
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: groups
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  defaultValue: nextval('groups_id_seq')
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: groups_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: VARCHAR(5)
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: now()
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+            tableName: groups
+  - changeSet:
+      id: 1659686623358-3
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - sequenceExists:
+                sequenceName: subjects_id_seq
+      changes:
+        - createSequence:
+            sequenceName: subjects_id_seq
+  - changeSet:
+      id: 1659686623358-4
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: subjects
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  defaultValue: nextval('subjects_id_seq')
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: subjects_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: VARCHAR(128)
+            tableName: subjects
+  - changeSet:
+      id: 1659686623358-5
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - sequenceExists:
+                sequenceName: students_id_seq
+      changes:
+        - createSequence:
+            sequenceName: students_id_seq
+  - changeSet:
+      id: 1659686623358-6
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: students
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  defaultValue: nextval('students_id_seq')
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: students_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: first_name
+                  type: VARCHAR(128)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_name
+                  type: VARCHAR(128)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(128)
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: now()
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: group_id
+                  type: BIGINT
+            tableName: students
+  - changeSet:
+      id: 1659686623358-7
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: students_subjects
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: student_subject_pk
+                  name: student_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: student_subject_pk
+                  name: subject_id
+                  type: BIGINT
+              - column:
+                  name: mark
+                  type: INTEGER
+            tableName: students_subjects
+  - changeSet:
+      id: 1659686623358-8
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - uniqueConstraintExists:
+                columnNames: title
+                constraintName: groups_title_key
+                tableName: groups
+      changes:
+        - addUniqueConstraint:
+            columnNames: title
+            constraintName: groups_title_key
+            tableName: groups
+  - changeSet:
+      id: 1659686623358-9
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - uniqueConstraintExists:
+                columnNames: title
+                constraintName: subjects_title_key
+                tableName: subjects
+      changes:
+        - addUniqueConstraint:
+            columnNames: title
+            constraintName: subjects_title_key
+            tableName: subjects
+  - changeSet:
+      id: 1659686623358-10
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - uniqueConstraintExists:
+                columnNames: email
+                constraintName: students_email_key
+                tableName: students
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: students_email_key
+            tableName: students
+  - changeSet:
+      id: 1659686623358-11
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - foreignKeyConstraintExists:
+            foreignKeyName: students_group_id_fkey
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: students
+            constraintName: students_group_id_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: groups
+            validate: true
+  - changeSet:
+      id: 1659686623358-12
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - foreignKeyConstraintExists:
+            foreignKeyName: students_subjects_student_id_fkey
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: student_id
+            baseTableName: students_subjects
+            constraintName: students_subjects_student_id_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: students
+            validate: true
+  - changeSet:
+      id: 1659686623358-13
+      author: SaneQQQQ
+      preConditions:
+        - onFail: MARK_RAN
+        - foreignKeyConstraintExists:
+            foreignKeyName: students_subjects_subject_id_fkey
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: subject_id
+            baseTableName: students_subjects
+            constraintName: students_subjects_subject_id_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: subjects
+            validate: true
