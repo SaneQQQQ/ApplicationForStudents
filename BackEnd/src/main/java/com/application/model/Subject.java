@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 public class Subject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 

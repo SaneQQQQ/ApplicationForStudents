@@ -159,6 +159,77 @@
       <artifactId>springfox-swagger-ui</artifactId>
       <version>${swagger.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.xml.bind</groupId>
+          <artifactId>jaxb-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase.ext</groupId>
+      <artifactId>liquibase-hibernate5</artifactId>
+      <version>${liquibase.version}</version>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.liquibase</groupId>
+          <artifactId>liquibase-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jboss.logging</groupId>
+          <artifactId>jboss-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.bytebuddy</groupId>
+          <artifactId>byte-buddy</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.bytebuddy</groupId>
+          <artifactId>byte-buddy</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-templates</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-xml</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-nio</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-macro</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-sql</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-json</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-test</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
 
   <build>
