@@ -34,7 +34,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {AddEditStudentComponent} from './component/student/add-edit/add-edit.component';
 import {DeleteMarkComponent} from "./component/student-details/delete/delete.component";
 import {AddEditMarkComponent} from "./component/student-details/add-edit/add-edit.component";
-import {MatGridListModule} from "@angular/material/grid-list";
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 
 @NgModule({
@@ -56,25 +56,25 @@ import {MatGridListModule} from "@angular/material/grid-list";
     AddEditMarkComponent,
     DeleteMarkComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatDialogModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatSelectModule,
-    MatGridListModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatTableModule,
+        MatButtonModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatDialogModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        MatSelectModule,
+        MatSidenavModule
+    ],
   providers: [GroupService, SubjectService, StudentService],
   bootstrap: [AppComponent]
 })

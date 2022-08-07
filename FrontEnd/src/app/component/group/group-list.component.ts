@@ -16,7 +16,7 @@ import {Group} from "../../interface/group";
 })
 export class GroupListComponent implements OnInit {
 
-  displayedColumns: string[] = ['title', 'actions'];
+  displayedColumns: string[] = ['title', 'countOfStudents', 'actions'];
   dataSource!: MatTableDataSource<Group>;
   groups!: Group[];
 

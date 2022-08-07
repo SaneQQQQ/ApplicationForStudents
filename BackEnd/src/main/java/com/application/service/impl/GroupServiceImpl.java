@@ -1,7 +1,9 @@
 package com.application.service.impl;
 
 import com.application.dao.impl.GroupDAOImpl;
+import com.application.dto.FullGroupDTO;
 import com.application.dto.GroupDTO;
+import com.application.mapper.FullGroupMapper;
 import com.application.mapper.GroupMapper;
 import com.application.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ public class GroupServiceImpl implements GroupService {
 
     private final GroupDAOImpl groupDAO;
     private final GroupMapper groupMapper = GroupMapper.INSTANCE;
+    private final FullGroupMapper fullGroupMapper = FullGroupMapper.INSTANCE;
 
     @Autowired
     public GroupServiceImpl(GroupDAOImpl groupDAO) {
@@ -39,8 +42,8 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<GroupDTO> readAll(PageRequest pageRequest) {
-        return groupDAO.readAll(pageRequest).map(groupMapper::toDTO);
+    public Page<FullGroupDTO> readAll(PageRequest pageRequest) {
+        return groupDAO.readAll(pageRequest).map(fullGroupMapper::toDTO);
     }
 
     @Override
