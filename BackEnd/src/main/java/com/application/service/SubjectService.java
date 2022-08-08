@@ -1,5 +1,6 @@
 package com.application.service;
 
+import com.application.dto.FullSubjectDTO;
 import com.application.dto.SubjectDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +11,7 @@ public interface SubjectService {
 
     SubjectDTO read(Long id);
 
-    Page<SubjectDTO> readAll(PageRequest pageRequest);
+    Page<FullSubjectDTO> readAll(PageRequest pageRequest);
 
     SubjectDTO update(SubjectDTO subject);
 

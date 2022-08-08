@@ -16,7 +16,7 @@ import {DeleteSubjectComponent} from "./delete/delete.component";
 })
 export class SubjectComponent implements OnInit {
 
-  displayedColumns: string[] = ['title', 'actions'];
+  displayedColumns: string[] = ['title', 'countOfStudents', 'actions'];
   dataSource!: MatTableDataSource<Subject>;
   subjects!: Subject[];
 

@@ -3,6 +3,7 @@ package com.application.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -25,4 +26,7 @@ public class Group {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Formula("(SELECT COUNT(s.id) FROM students AS s WHERE s.group_id = id)")
+    private int countOfStudents;
 }

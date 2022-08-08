@@ -1,53 +1,49 @@
-<mat-grid-list cols="4" rowHeight="2:4">
-  <mat-grid-tile class="mat-grid" colspan="1">
-    <div class="details-container">
-      <div class="details-title"><h1>Student Information</h1>
-        <img class="image"
-             src="data:image/png;base64,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"/>
-      </div>
-      <div class="student-info">
-        <h3>Name: </h3>{{studentFirstName}} {{studentLastName}}
-        <h3>Email: </h3>{{studentEmail}}
-        <h3>Group: </h3><a class="mat-button-href" [routerLink]="['/groups', studentGroupId]"
-                           target="_self">{{studentGroupTitle}}</a>
-        <h3>Average Rank: </h3>{{studentAverageRank | number:'1.2-2'}}
-      </div>
+<mat-drawer-container class="screen">
+  <mat-drawer class="details-container" mode="side" opened>
+    <div class="details-title"><h1>Student Information</h1>
+      <img class="image"
+           src="data:image/png;base64,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"/>
     </div>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="3">
-    <div class="container">
-      <div class="mat-title"><h2>Marks</h2></div>
-      <div class="mat-button-toggle">
-        <button class="addButton" mat-raised-button color="primary" (click)="openAddEditDialog()">Add</button>
-      </div>
-      <table class="mat-elevation-z8" mat-table matSort [dataSource]="dataSource"
-             (matSortChange)="onSortChange($event)">
-        <ng-container matColumnDef="subject.title">
-          <th class="mat-tab-header" mat-header-cell mat-sort-header="" *matHeaderCellDef>Subject</th>
-          <td mat-cell *matCellDef="let mark">{{mark.subject.title}}</td>
-        </ng-container>
-        <ng-container matColumnDef="mark">
-          <th class="mat-tab-header" mat-header-cell mat-sort-header="" *matHeaderCellDef>Mark</th>
-          <td mat-cell *matCellDef="let mark">{{mark.mark}}</td>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-          <th class="mat-tab-header" mat-header-cell *matHeaderCellDef>Actions</th>
-          <td mat-cell *matCellDef="let row">
-            <button class="button" mat-button color="primary" (click)="openAddEditDialog(row)">Edit</button>
-            <button class="button" mat-button color="warn" (click)="openDeleteDialog(row)">Delete</button>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <div class="no-data" *ngIf="pageTotalItems == 0">No Data Found</div>
-      <mat-paginator class="mat-paginator-container"
-                     [length]="pageTotalItems"
-                     [pageSize]="pageSize"
-                     [pageSizeOptions]="pageSizeOptions"
-                     (page)="onPageChange($event)"
-                     showFirstLastButtons>
-      </mat-paginator>
+    <div class="student-info">
+      <h3>Name: </h3>{{studentFirstName}} {{studentLastName}}
+      <h3>Email: </h3>{{studentEmail}}
+      <h3>Group: </h3><a class="mat-button-href" [routerLink]="['/groups', studentGroupId]"
+                         target="_self">{{studentGroupTitle}}</a>
+      <h3>Average Rank: </h3>{{studentAverageRank | number:'1.2-2'}}
     </div>
-  </mat-grid-tile>
-</mat-grid-list>
+  </mat-drawer>
+  <mat-drawer-content class="container">
+    <div class="mat-title"><h2>Marks</h2></div>
+    <div class="mat-button-toggle">
+      <button class="addButton" mat-raised-button color="primary" (click)="openAddEditDialog()">Add</button>
+    </div>
+    <table class="mat-elevation-z8" mat-table matSort [dataSource]="dataSource"
+           (matSortChange)="onSortChange($event)">
+      <ng-container matColumnDef="subject.title">
+        <th class="mat-tab-header" mat-header-cell mat-sort-header="" *matHeaderCellDef>Subject</th>
+        <td mat-cell *matCellDef="let mark">{{mark.subject.title}}</td>
+      </ng-container>
+      <ng-container matColumnDef="mark">
+        <th class="mat-tab-header" mat-header-cell mat-sort-header="" *matHeaderCellDef>Mark</th>
+        <td mat-cell *matCellDef="let mark">{{mark.mark}}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th class="mat-tab-header" mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let row">
+          <button class="button" mat-button color="primary" (click)="openAddEditDialog(row)">Edit</button>
+          <button class="button" mat-button color="warn" (click)="openDeleteDialog(row)">Delete</button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div class="no-data" *ngIf="pageTotalItems == 0">No Data Found</div>
+    <mat-paginator class="mat-paginator-container"
+                   [length]="pageTotalItems"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="onPageChange($event)"
+                   showFirstLastButtons>
+    </mat-paginator>
+  </mat-drawer-content>
+</mat-drawer-container>

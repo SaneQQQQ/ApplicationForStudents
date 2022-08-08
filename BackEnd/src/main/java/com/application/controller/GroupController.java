@@ -1,5 +1,6 @@
 package com.application.controller;
 
+import com.application.dto.FullGroupDTO;
 import com.application.dto.GroupDTO;
 import com.application.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,10 @@ public class GroupController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GroupDTO>> readAll(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                                                  @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
-                                                  @RequestParam(value = "sort_by", required = false) String sortBy,
-                                                  @RequestParam(value = "order", required = false) String order) {
+    public ResponseEntity<Page<FullGroupDTO>> readAll(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                                                      @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
+                                                      @RequestParam(value = "sort_by", required = false) String sortBy,
+                                                      @RequestParam(value = "order", required = false) String order) {
         Sort sort = sortBy != null && order != null ? Sort.by(Sort.Direction.fromString(order), sortBy) : Sort.unsorted();
         return new ResponseEntity<>(groupService.readAll(PageRequest.of(page, pageSize, sort)), HttpStatus.OK);
     }

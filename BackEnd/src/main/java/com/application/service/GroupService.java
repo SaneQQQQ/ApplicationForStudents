@@ -1,5 +1,6 @@
 package com.application.service;
 
+import com.application.dto.FullGroupDTO;
 import com.application.dto.GroupDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +11,7 @@ public interface GroupService {
 
     GroupDTO read(Long id);
 
-    Page<GroupDTO> readAll(PageRequest pageRequest);
+    Page<FullGroupDTO> readAll(PageRequest pageRequest);
 
     GroupDTO update(GroupDTO group);
 
