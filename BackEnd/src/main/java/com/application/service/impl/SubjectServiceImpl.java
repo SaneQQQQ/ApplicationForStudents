@@ -1,7 +1,9 @@
 package com.application.service.impl;
 
 import com.application.dao.impl.SubjectDAOImpl;
+import com.application.dto.FullSubjectDTO;
 import com.application.dto.SubjectDTO;
+import com.application.mapper.FullSubjectMapper;
 import com.application.mapper.SubjectMapper;
 import com.application.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     private final SubjectDAOImpl subjectDAO;
     private final SubjectMapper subjectMapper = SubjectMapper.INSTANCE;
+    private final FullSubjectMapper fullSubjectMapper = FullSubjectMapper.INSTANCE;
 
     @Autowired
     public SubjectServiceImpl(SubjectDAOImpl subjectDAO) {
@@ -38,8 +41,8 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<SubjectDTO> readAll(PageRequest pageRequest) {
-        return subjectDAO.readAll(pageRequest).map(subjectMapper::toDTO);
+    public Page<FullSubjectDTO> readAll(PageRequest pageRequest) {
+        return subjectDAO.readAll(pageRequest).map(fullSubjectMapper::toDTO);
     }
 
     @Override
