@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {uniqueValidator} from "../../../validation/unique.validator";
 import {GroupService} from "../../../service/group.service";
-import {Group} from "../../../interface/group";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
@@ -30,7 +29,7 @@ export class AddGroupComponent implements OnInit {
 
   public onSubmit(): void {
     this.groupService.create(this.addForm.value).subscribe({
-      next: (response: Group) => {
+      next: () => {
         this.dialogRef.close();
       },
       error: (err: HttpErrorResponse) => {

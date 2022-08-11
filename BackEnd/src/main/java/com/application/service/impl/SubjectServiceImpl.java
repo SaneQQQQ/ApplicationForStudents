@@ -1,6 +1,6 @@
 package com.application.service.impl;
 
-import com.application.dao.impl.SubjectDAOImpl;
+import com.application.dao.SubjectDAO;
 import com.application.dto.FullSubjectDTO;
 import com.application.dto.SubjectDTO;
 import com.application.mapper.FullSubjectMapper;
@@ -17,12 +17,12 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
-    private final SubjectDAOImpl subjectDAO;
+    private final SubjectDAO subjectDAO;
     private final SubjectMapper subjectMapper = SubjectMapper.INSTANCE;
     private final FullSubjectMapper fullSubjectMapper = FullSubjectMapper.INSTANCE;
 
     @Autowired
-    public SubjectServiceImpl(SubjectDAOImpl subjectDAO) {
+    public SubjectServiceImpl(SubjectDAO subjectDAO) {
         this.subjectDAO = subjectDAO;
     }
 

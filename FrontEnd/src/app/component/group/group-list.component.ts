@@ -20,9 +20,9 @@ export class GroupListComponent implements OnInit {
   dataSource!: MatTableDataSource<Group>;
   groups!: Group[];
 
-  page: number = 0;
+  pageNumber: number = 0;
   pageSize: number = 10;
-  pageTotalItems: number = this.page * this.pageSize;
+  pageTotalItems: number = this.pageNumber * this.pageSize;
   pageSizeOptions: number[] = [10, 15, 20, 25];
 
   sortBy!: string;
@@ -35,16 +35,16 @@ export class GroupListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getGroups(this.page, this.pageSize, this.sortBy, this.sortOrder)
+    this.getGroups(this.pageNumber, this.pageSize, this.sortBy, this.sortOrder)
   }
 
   public getGroups(page: number, pageSize: number, sortBy: string, sortOrder: string): void {
     this.groupService.readAll(page, pageSize, sortBy, sortOrder)
       .subscribe(
         response => {
-          const {content, totalElements, number} = response;
+          const {content, totalElements, pageNumber} = response;
           this.pageTotalItems = totalElements;
-          this.page = number;
+          this.pageNumber = pageNumber;
           this.groups = content;
           this.dataSource = new MatTableDataSource<Group>(this.groups);
         }
@@ -54,46 +54,43 @@ export class GroupListComponent implements OnInit {
   public onPageChange(event: PageEvent): void {
     if (this.pageSize != event.pageSize) {
       this.paginator.firstPage();
-      this.page = 0;
+      this.pageNumber = 0;
       this.pageTotalItems = event.length;
       this.pageSize = event.pageSize;
-      this.getGroups(this.page, this.pageSize, this.sortBy, this.sortOrder);
+      this.getGroups(this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
     } else {
-      this.page = event.pageIndex;
+      this.pageNumber = event.pageIndex;
       this.pageTotalItems = event.length;
-      this.getGroups(this.page, this.pageSize, this.sortBy, this.sortOrder);
+      this.getGroups(this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
     }
   }
 
   public onSortChange(event: Sort): void {
     this.paginator.firstPage();
-    this.page = 0;
+    this.pageNumber = 0;
     this.sortBy = event.active;
     this.sortOrder = event.direction;
-    this.getGroups(this.page, this.pageSize, this.sortBy, this.sortOrder);
+    this.getGroups(this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
   }
 
   public openAddDialog(): void {
-    const dialogRef = this.dialog.open(AddGroupComponent);
-    dialogRef.afterClosed().subscribe(response => {
+    this.dialog.open(AddGroupComponent).afterClosed().subscribe(() => {
       this.clearSort();
     });
   }
 
   public openUpdateDialog(element: Group): void {
-    const dialogRef = this.dialog.open(UpdateGroupComponent, {
+    this.dialog.open(UpdateGroupComponent, {
       data: element
-    });
-    dialogRef.afterClosed().subscribe(response => {
+    }).afterClosed().subscribe(() => {
       this.clearSort();
     });
   }
 
   public openDeleteDialog(element: Group): void {
-    const dialogRef = this.dialog.open(DeleteGroupComponent, {
+    this.dialog.open(DeleteGroupComponent, {
       data: element
-    });
-    dialogRef.afterClosed().subscribe(response => {
+    }).afterClosed().subscribe(() => {
       this.clearSort();
     });
   }

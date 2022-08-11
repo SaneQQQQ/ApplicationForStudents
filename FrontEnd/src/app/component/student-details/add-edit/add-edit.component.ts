@@ -60,13 +60,13 @@ export class AddEditMarkComponent implements OnInit {
   public onSubmit(): void {
     if (this.data.element == null) {
       this.studentService.createMark(this.addForm.value).subscribe({
-        next: (response: Mark) => {
+        next: () => {
           this.dialogRef.close();
         }
       });
     } else {
       this.studentService.updateMark(this.addForm.value).subscribe({
-        next: (response: Mark) => {
+        next: () => {
           this.dialogRef.close();
         }
       });

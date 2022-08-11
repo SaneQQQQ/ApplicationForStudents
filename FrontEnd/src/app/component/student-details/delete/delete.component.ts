@@ -23,7 +23,7 @@ export class DeleteMarkComponent implements OnInit {
 
   public onSubmit(): void {
     this.studentService.deleteMark(this.data.studentId, this.data.element.subject.id).subscribe({
-      next: (response: string) => {
+      next: () => {
         this.dialogRef.close();
       },
       error: (err: HttpErrorResponse) => {

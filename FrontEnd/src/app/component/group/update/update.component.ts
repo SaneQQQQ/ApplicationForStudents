@@ -32,7 +32,7 @@ export class UpdateGroupComponent implements OnInit {
 
   public onSubmit(): void {
     this.groupService.update(this.editForm.value).subscribe({
-      next: (response: Group) => {
+      next: () => {
         this.dialogRef.close();
       },
       error: (err: HttpErrorResponse) => {

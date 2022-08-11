@@ -21,9 +21,9 @@ export class GroupComponent implements OnInit {
   dataSource!: MatTableDataSource<Student>;
   students!: Student[];
 
-  page: number = 0;
+  pageNumber: number = 0;
   pageSize: number = 10;
-  pageTotalItems: number = this.page * this.pageSize;
+  pageTotalItems: number = this.pageNumber * this.pageSize;
   pageSizeOptions: number[] = [10, 15, 20, 25];
 
   sortBy!: string;
@@ -42,7 +42,7 @@ export class GroupComponent implements OnInit {
       .subscribe(params => {
         this.groupId = Number(params.get('id'));
         this.getGroup(this.groupId);
-        this.getStudentsByGroupId(this.groupId, this.page, this.pageSize, this.sortBy, this.sortOrder);
+        this.getStudentsByGroupId(this.groupId, this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
       })
   }
 
@@ -57,9 +57,9 @@ export class GroupComponent implements OnInit {
     this.studentService.readAllByGroupId(groupId, page, pageSize, sortBy, order)
       .subscribe(
         response => {
-          const {content, totalElements, number} = response;
+          const {content, totalElements, pageNumber} = response;
           this.pageTotalItems = totalElements;
-          this.page = number;
+          this.pageNumber = pageNumber;
           this.students = content;
           this.dataSource = new MatTableDataSource<Student>(this.students);
         }
@@ -69,28 +69,22 @@ export class GroupComponent implements OnInit {
   public onPageChange(event: PageEvent): void {
     if (this.pageSize != event.pageSize) {
       this.paginator.firstPage();
-      this.page = 0;
+      this.pageNumber = 0;
       this.pageTotalItems = event.length;
       this.pageSize = event.pageSize;
-      this.getStudentsByGroupId(this.groupId, this.page, this.pageSize, this.sortBy, this.sortOrder);
+      this.getStudentsByGroupId(this.groupId, this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
     } else {
-      this.page = event.pageIndex;
+      this.pageNumber = event.pageIndex;
       this.pageTotalItems = event.length;
-      this.getStudentsByGroupId(this.groupId, this.page, this.pageSize, this.sortBy, this.sortOrder);
+      this.getStudentsByGroupId(this.groupId, this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
     }
   }
 
   public onSortChange(event: Sort): void {
     this.paginator.firstPage();
-    this.page = 0;
+    this.pageNumber = 0;
     this.sortBy = event.active;
     this.sortOrder = event.direction;
-    this.getStudentsByGroupId(this.groupId, this.page, this.pageSize, this.sortBy, this.sortOrder);
-  }
-
-  private clearSort(): void {
-    this.sort.sort({id: '', start: 'asc', disableClear: false});
-    this.sortBy = '';
-    this.sortOrder = '';
+    this.getStudentsByGroupId(this.groupId, this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
   }
 }

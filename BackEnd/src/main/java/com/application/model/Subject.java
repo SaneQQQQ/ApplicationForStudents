@@ -1,5 +1,6 @@
 package com.application.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
@@ -21,6 +22,7 @@ public class Subject {
     @Column(name = "title", nullable = false, unique = true, length = 128)
     private String title;
 
+    @Setter(AccessLevel.NONE)
     @Formula("(SELECT COUNT(s.student_id) FROM students_subjects AS s WHERE s.subject_id = id)")
     private int countOfStudents;
 }

@@ -32,7 +32,7 @@ export class UpdateSubjectComponent implements OnInit {
 
   public onSubmit(): void {
     this.subjectService.update(this.editForm.value).subscribe({
-      next: (response: Subject) => {
+      next: () => {
         this.dialogRef.close();
       },
       error: (err: HttpErrorResponse) => {

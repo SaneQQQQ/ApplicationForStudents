@@ -23,7 +23,7 @@ export class DeleteStudentComponent implements OnInit {
 
   public onSubmit(): void {
     this.studentService.delete(this.data.id).subscribe({
-      next: (response: string) => {
+      next: () => {
         this.dialogRef.close();
       },
       error: (err: HttpErrorResponse) => {

@@ -1,6 +1,6 @@
 package com.application.service.impl;
 
-import com.application.dao.impl.StudentDAOImpl;
+import com.application.dao.StudentDAO;
 import com.application.dto.FullStudentDTO;
 import com.application.dto.StudentDTO;
 import com.application.mapper.FullStudentMapper;
@@ -17,13 +17,13 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private final StudentDAOImpl studentDAO;
+    private final StudentDAO studentDAO;
     private final FullStudentMapper fullStudentMapper = FullStudentMapper.INSTANCE;
     private final StudentMapper studentMapper = StudentMapper.INSTANCE;
 
 
     @Autowired
-    public StudentServiceImpl(StudentDAOImpl studentDAO) {
+    public StudentServiceImpl(StudentDAO studentDAO) {
         this.studentDAO = studentDAO;
     }
 

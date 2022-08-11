@@ -1,5 +1,6 @@
 package com.application.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,6 +28,7 @@ public class Group {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Setter(AccessLevel.NONE)
     @Formula("(SELECT COUNT(s.id) FROM students AS s WHERE s.group_id = id)")
     private int countOfStudents;
 }

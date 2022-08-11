@@ -28,9 +28,9 @@ export class StudentComponent implements OnInit {
   dataSource!: MatTableDataSource<Mark>;
   marks!: Mark[];
 
-  page: number = 0;
+  pageNumber: number = 0;
   pageSize: number = 10;
-  pageTotalItems: number = this.page * this.pageSize;
+  pageTotalItems: number = this.pageNumber * this.pageSize;
   pageSizeOptions: number[] = [10, 15, 20, 25];
 
   sortBy!: string;
@@ -47,7 +47,7 @@ export class StudentComponent implements OnInit {
       .subscribe(params => {
         this.studentId = Number(params.get('id'));
         this.getStudent(this.studentId);
-        this.getMarksByStudentId(this.studentId, this.page, this.pageSize, this.sortBy, this.sortOrder);
+        this.getMarksByStudentId(this.studentId, this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
       })
   }
 
@@ -69,9 +69,9 @@ export class StudentComponent implements OnInit {
     this.studentService.readAllMarksByStudent(studentId, page, pageSize, sortBy, sortOrder)
       .subscribe(
         response => {
-          const {content, totalElements, number} = response;
+          const {content, totalElements, pageNumber} = response;
           this.pageTotalItems = totalElements;
-          this.page = number;
+          this.pageNumber = pageNumber;
           this.marks = content;
           this.dataSource = new MatTableDataSource<Mark>(this.marks);
         }
@@ -81,53 +81,51 @@ export class StudentComponent implements OnInit {
   public onPageChange(event: PageEvent): void {
     if (this.pageSize != event.pageSize) {
       this.paginator.firstPage();
-      this.page = 0;
+      this.pageNumber = 0;
       this.pageTotalItems = event.length;
       this.pageSize = event.pageSize;
-      this.getMarksByStudentId(this.studentId, this.page, this.pageSize, this.sortBy, this.sortOrder);
+      this.getMarksByStudentId(this.studentId, this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
     } else {
-      this.page = event.pageIndex;
+      this.pageNumber = event.pageIndex;
       this.pageTotalItems = event.length;
-      this.getMarksByStudentId(this.studentId, this.page, this.pageSize, this.sortBy, this.sortOrder);
+      this.getMarksByStudentId(this.studentId, this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
     }
   }
 
   public onSortChange(event: Sort): void {
     this.paginator.firstPage();
-    this.page = 0;
+    this.pageNumber = 0;
     this.sortBy = event.active;
     this.sortOrder = event.direction;
-    this.getMarksByStudentId(this.studentId, this.page, this.pageSize, this.sortBy, this.sortOrder);
-  }
-
-  private clearSort(): void {
-    this.sort.sort({id: '', start: 'asc', disableClear: false});
-    this.sortBy = '';
-    this.sortOrder = '';
+    this.getMarksByStudentId(this.studentId, this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
   }
 
   public openAddEditDialog(element?: Mark): void {
-    const dialogRef = this.dialog.open(AddEditMarkComponent, {
+    this.dialog.open(AddEditMarkComponent, {
       data: {
         student: {id: this.studentId},
         firstName: this.studentFirstName,
         lastName: this.studentLastName,
         element: element
       }
-    });
-    dialogRef.afterClosed().subscribe(response => {
+    }).afterClosed().subscribe(() => {
       this.clearSort();
       this.getStudent(this.studentId);
     });
   }
 
   public openDeleteDialog(element: Mark): void {
-    const dialogRef = this.dialog.open(DeleteMarkComponent, {
+    this.dialog.open(DeleteMarkComponent, {
       data: {studentId: this.studentId, element: element}
-    });
-    dialogRef.afterClosed().subscribe(response => {
+    }).afterClosed().subscribe(() => {
       this.clearSort();
       this.getStudent(this.studentId);
     });
+  }
+
+  private clearSort(): void {
+    this.sort.sort({id: '', start: 'asc', disableClear: false});
+    this.sortBy = '';
+    this.sortOrder = '';
   }
 }

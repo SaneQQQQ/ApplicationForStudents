@@ -55,7 +55,7 @@ export class AddEditStudentComponent implements OnInit {
   public onSubmit(): void {
     if (this.data == null) {
       this.studentService.create(this.addForm.value).subscribe({
-        next: (response: Student) => {
+        next: () => {
           this.dialogRef.close();
         },
         error: (err: HttpErrorResponse) => {
@@ -66,7 +66,7 @@ export class AddEditStudentComponent implements OnInit {
       });
     } else {
       this.studentService.update(this.addForm.value).subscribe({
-        next: (response: Student) => {
+        next: () => {
           this.dialogRef.close();
         },
         error: (err: HttpErrorResponse) => {

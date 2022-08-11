@@ -23,7 +23,7 @@ export class DeleteGroupComponent implements OnInit {
 
   public onSubmit(): void {
     this.groupService.delete(this.data.id).subscribe({
-      next: (response: string) => {
+      next: () => {
         this.dialogRef.close();
       },
       error: (err: HttpErrorResponse) => {

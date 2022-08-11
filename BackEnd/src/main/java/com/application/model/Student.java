@@ -1,5 +1,6 @@
 package com.application.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -42,6 +43,7 @@ public class Student {
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
+    @Setter(AccessLevel.NONE)
     @Formula("(SELECT AVG(s.mark) FROM students_subjects AS s WHERE s.student_id = id)")
     private BigDecimal averageRank;
 

@@ -1,6 +1,6 @@
 package com.application.service.impl;
 
-import com.application.dao.impl.GroupDAOImpl;
+import com.application.dao.GroupDAO;
 import com.application.dto.FullGroupDTO;
 import com.application.dto.GroupDTO;
 import com.application.mapper.FullGroupMapper;
@@ -17,12 +17,12 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class GroupServiceImpl implements GroupService {
 
-    private final GroupDAOImpl groupDAO;
+    private final GroupDAO groupDAO;
     private final GroupMapper groupMapper = GroupMapper.INSTANCE;
     private final FullGroupMapper fullGroupMapper = FullGroupMapper.INSTANCE;
 
     @Autowired
-    public GroupServiceImpl(GroupDAOImpl groupDAO) {
+    public GroupServiceImpl(GroupDAO groupDAO) {
         this.groupDAO = groupDAO;
     }
 

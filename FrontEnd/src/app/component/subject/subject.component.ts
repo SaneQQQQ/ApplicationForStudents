@@ -20,9 +20,9 @@ export class SubjectComponent implements OnInit {
   dataSource!: MatTableDataSource<Subject>;
   subjects!: Subject[];
 
-  page: number = 0;
+  pageNumber: number = 0;
   pageSize: number = 10;
-  pageTotalItems: number = this.page * this.pageSize;
+  pageTotalItems: number = this.pageNumber * this.pageSize;
   pageSizeOptions: number[] = [10, 15, 20, 25];
 
   sortBy!: string;
@@ -35,16 +35,16 @@ export class SubjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder)
+    this.getSubjects(this.pageNumber, this.pageSize, this.sortBy, this.sortOrder)
   }
 
   public getSubjects(page: number, pageSize: number, sortBy: string, sortOrder: string): void {
     this.subjectService.readAll(page, pageSize, sortBy, sortOrder)
       .subscribe(
         response => {
-          const {content, totalElements, number} = response;
+          const {content, totalElements, pageNumber} = response;
           this.pageTotalItems = totalElements;
-          this.page = number;
+          this.pageNumber = pageNumber;
           this.subjects = content;
           this.dataSource = new MatTableDataSource<Subject>(this.subjects);
         }
@@ -54,46 +54,43 @@ export class SubjectComponent implements OnInit {
   public onPageChange(event: PageEvent): void {
     if (this.pageSize != event.pageSize) {
       this.paginator.firstPage();
-      this.page = 0;
+      this.pageNumber = 0;
       this.pageTotalItems = event.length;
       this.pageSize = event.pageSize;
-      this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder);
+      this.getSubjects(this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
     } else {
-      this.page = event.pageIndex;
+      this.pageNumber = event.pageIndex;
       this.pageTotalItems = event.length;
-      this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder);
+      this.getSubjects(this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
     }
   }
 
   public onSortChange(event: Sort): void {
     this.paginator.firstPage();
-    this.page = 0;
+    this.pageNumber = 0;
     this.sortBy = event.active;
     this.sortOrder = event.direction;
-    this.getSubjects(this.page, this.pageSize, this.sortBy, this.sortOrder);
+    this.getSubjects(this.pageNumber, this.pageSize, this.sortBy, this.sortOrder);
   }
 
   public openAddDialog(): void {
-    const dialogRef = this.dialog.open(AddSubjectComponent);
-    dialogRef.afterClosed().subscribe(response => {
+    this.dialog.open(AddSubjectComponent).afterClosed().subscribe(() => {
       this.clearSort();
     });
   }
 
   public openUpdateDialog(element: Subject): void {
-    const dialogRef = this.dialog.open(UpdateSubjectComponent, {
+    this.dialog.open(UpdateSubjectComponent, {
       data: element
-    });
-    dialogRef.afterClosed().subscribe(response => {
+    }).afterClosed().subscribe(() => {
       this.clearSort();
     });
   }
 
   public openDeleteDialog(element: Subject): void {
-    const dialogRef = this.dialog.open(DeleteSubjectComponent, {
+    this.dialog.open(DeleteSubjectComponent, {
       data: element
-    });
-    dialogRef.afterClosed().subscribe(response => {
+    }).afterClosed().subscribe(() => {
       this.clearSort();
     });
   }

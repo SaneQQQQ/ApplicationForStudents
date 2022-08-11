@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {SubjectService} from "../../../service/subject.service";
 import {uniqueValidator} from "../../../validation/unique.validator";
-import {Subject} from "../../../interface/subject";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
@@ -30,7 +29,7 @@ export class AddSubjectComponent implements OnInit {
 
   public onSubmit(): void {
     this.subjectService.create(this.addForm.value).subscribe({
-      next: (response: Subject) => {
+      next: () => {
         this.dialogRef.close();
       },
       error: (err: HttpErrorResponse) => {
