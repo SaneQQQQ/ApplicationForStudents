@@ -1,6 +1,10 @@
 package com.application.dao.impl;
 
 import com.application.dao.BaseDAO;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -10,10 +14,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -32,12 +32,12 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
     }
 
     public T create(T t) {
-        sessionFactory.getCurrentSession().save(t);
+        sessionFactory.getCurrentSession().persist(t);
         return t;
     }
 
     public Optional<T> read(Serializable id) {
-        T t = sessionFactory.getCurrentSession().get(tClass, id);
+        T t = sessionFactory.getCurrentSession().find(tClass, id);
         if (t == null) {
             return Optional.empty();
         }
@@ -60,15 +60,15 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
     }
 
     public T update(T t) {
-        sessionFactory.getCurrentSession().update(t);
+        sessionFactory.getCurrentSession().merge(t);
         return t;
     }
 
     public boolean delete(Serializable id) {
-        T entity = sessionFactory.getCurrentSession().get(tClass, id);
+        T entity = sessionFactory.getCurrentSession().find(tClass, id);
         if (entity == null)
             return true;
-        sessionFactory.getCurrentSession().delete(entity);
+        sessionFactory.getCurrentSession().remove(entity);
         return true;
     }
 

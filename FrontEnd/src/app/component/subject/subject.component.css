@@ -51,6 +51,9 @@
   text-align: center;
 }
 
-
-
-
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  padding-block: 8px;
+  align-items: center;
+}
