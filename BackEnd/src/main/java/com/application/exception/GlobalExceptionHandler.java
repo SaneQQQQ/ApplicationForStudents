@@ -1,18 +1,19 @@
 package com.application.exception;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
+import jakarta.persistence.PersistenceException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -42,19 +43,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new CustomJsonResponse(exception.getCause().getCause().getMessage()), HttpStatus.CONFLICT);
     }
 
-    private static class CustomJsonResponse {
+    @Setter
+    @Getter
+    public static class CustomJsonResponse {
         private String message;
 
         public CustomJsonResponse(String message) {
             super();
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
             this.message = message;
         }
     }

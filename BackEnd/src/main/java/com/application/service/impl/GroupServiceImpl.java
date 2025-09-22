@@ -6,13 +6,12 @@ import com.application.dto.GroupDTO;
 import com.application.mapper.FullGroupMapper;
 import com.application.mapper.GroupMapper;
 import com.application.service.GroupService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityNotFoundException;
 
 @Service
 public class GroupServiceImpl implements GroupService {

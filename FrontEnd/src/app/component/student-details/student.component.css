@@ -3,6 +3,7 @@
   width: 85%;
   height: 49.7%;
   margin-bottom: 33.5%;
+  background-color: white;
 }
 
 .image {
@@ -105,4 +106,11 @@
 
 .no-data {
   text-align: center;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  padding-block: 8px;
+  align-items: center;
 }

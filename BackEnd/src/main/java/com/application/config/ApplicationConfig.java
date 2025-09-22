@@ -11,17 +11,11 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableSwagger2
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 public class ApplicationConfig {
@@ -75,14 +69,5 @@ public class ApplicationConfig {
         liquibase.setDataSource(dataSource());
         liquibase.setShouldRun(environment.getProperty("liquibase.shouldRun", Boolean.class, Boolean.TRUE));
         return liquibase;
-    }
-
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.application.controller"))
-                .paths(PathSelectors.any())
-                .build();
     }
 }

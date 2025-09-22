@@ -6,13 +6,12 @@ import com.application.dto.StudentDTO;
 import com.application.mapper.FullStudentMapper;
 import com.application.mapper.StudentMapper;
 import com.application.service.StudentService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityNotFoundException;
 
 @Service
 public class StudentServiceImpl implements StudentService {

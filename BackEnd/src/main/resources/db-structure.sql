@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS application_for_students_db;
+CREATE DATABASE application_for_students_db;
+
 DROP TABLE IF EXISTS groups CASCADE;
 DROP TABLE IF EXISTS subjects CASCADE;
 DROP TABLE IF EXISTS students CASCADE;

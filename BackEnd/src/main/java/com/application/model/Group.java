@@ -1,13 +1,17 @@
 package com.application.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
 
-import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Getter
